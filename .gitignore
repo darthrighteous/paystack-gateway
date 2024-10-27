@@ -1,0 +1,18 @@
+# MAC OS
+.DS_Store
+
+# Idea
+.idea
+.ruby-lsp
+
+# Project
+Gemfile.lock
+/.bundle/
+/.yardoc
+/_yardoc/
+/coverage/
+/doc/
+/pkg/
+/spec/reports/
+/tmp/
+
