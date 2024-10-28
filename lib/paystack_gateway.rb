@@ -7,6 +7,7 @@ require 'paystack_gateway/request_module'
 require 'paystack_gateway/response'
 require 'paystack_gateway/miscellaneous'
 require 'paystack_gateway/customers'
+require 'paystack_gateway/dedicated_virtual_accounts'
 
 # = PaystackGateway
 module PaystackGateway
