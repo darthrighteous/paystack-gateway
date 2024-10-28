@@ -12,6 +12,7 @@ require 'paystack_gateway/dedicated_virtual_accounts'
 require 'paystack_gateway/miscellaneous'
 require 'paystack_gateway/plans'
 require 'paystack_gateway/refunds'
+require 'paystack_gateway/subaccounts'
 
 # = PaystackGateway
 module PaystackGateway
