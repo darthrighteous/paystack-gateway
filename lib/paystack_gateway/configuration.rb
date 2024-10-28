@@ -5,9 +5,9 @@ require 'active_support/core_ext/module/delegation'
 # = PaystackGateway
 module PaystackGateway
   # Encapsulates the configuration options for PaystackGateway including the
-  # secret key, logger, and log filter.
+  # secret key, logger, logging_options, and log filter.
   class Configuration
-    attr_accessor :secret_key, :logger, :log_filter
+    attr_accessor :secret_key, :logger, :logging_options, :log_filter
 
     def initialize
       @logger = Logger.new($stdout)
@@ -18,7 +18,7 @@ module PaystackGateway
   class << self
     attr_writer :config
 
-    delegate :secret_key, :logger, :log_filter, to: :config
+    delegate :secret_key, :logger, :logging_options, :log_filter, to: :config
 
     def config = @config ||= Configuration.new
     def configure = yield(config)

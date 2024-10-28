@@ -28,7 +28,7 @@ module PaystackGateway
           conn.request :json
           conn.request :authorization, 'Bearer', PaystackGateway.secret_key
 
-          conn.response :logger, PaystackGateway.logger, { headers: false }
+          conn.response :logger, PaystackGateway.logger, { headers: false, **(PaystackGateway.logging_options || {}) }
           conn.response :mashify, mash_class: response_class
 
           conn.response :raise_error
