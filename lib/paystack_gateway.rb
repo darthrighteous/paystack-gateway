@@ -16,6 +16,7 @@ require 'paystack_gateway/subaccounts'
 require 'paystack_gateway/transactions'
 require 'paystack_gateway/transfer_recipients'
 require 'paystack_gateway/transfers'
+require 'paystack_gateway/verification'
 
 # = PaystackGateway
 module PaystackGateway
