@@ -23,7 +23,7 @@ module PaystackGateway
 
       private
 
-      def with_response(response_class = PaystackGateway::Response, cache_options: nil)
+      def with_response(response_class = Current.response_class, cache_options: nil)
         connection = Faraday.new(BASE_URL) do |conn|
           conn.request :json
           conn.request :authorization, 'Bearer', PaystackGateway.secret_key
@@ -55,31 +55,30 @@ module PaystackGateway
         @api_method_names ||= Set.new
         @api_method_names << method_name
 
-        log_and_raise_errors(method_name)
+        decorate_api_methods(method_name)
       end
 
-      def log_and_raise_errors(*method_names)
+      def decorate_api_methods(*method_names)
         singleton_class.class_exec do
           prepend(Module.new do
             method_names.flatten.each do |method_name|
               define_method(method_name) do |*args, **kwargs, &block|
-                super(*args, **kwargs, &block)
-              rescue Faraday::Error => e
-                PaystackGateway.logger.error "#{name}##{method_name}: #{e.message}"
-                PaystackGateway.logger.error JSON.pretty_generate(filtered_response(e.response) || {}) if e.response
-
-                handle_error(e, method_name)
+                Current.with(api_module: self, api_method_name: method_name) do
+                  super(*args, **kwargs, &block)
+                rescue Faraday::Error => e
+                  handle_error(e)
+                end
               end
             end
           end)
         end
       end
 
-      def handle_error(error, method_name)
-        error_klass_name = "#{method_name}_error".camelize.to_sym
-        error_klass = const_defined?(error_klass_name) ? const_get(error_klass_name) : ApiError
+      def handle_error(error)
+        PaystackGateway.logger.error "#{Current.qualified_api_method_name}: #{error.message}"
+        PaystackGateway.logger.error JSON.pretty_generate(filtered_response(error.response) || {}) if error.response
 
-        raise error_klass.new(
+        raise Current.error_class.new(
           "Paystack error: #{error.message}, status: #{error.response_status}, response: #{error.response_body}",
           original_error: error,
         )
