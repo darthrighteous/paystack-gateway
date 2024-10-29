@@ -20,7 +20,7 @@ module PaystackGateway
     end
 
     api_method def self.create(transaction_reference_or_id:)
-      with_response(CreateResponse) do |connection|
+      use_connection do |connection|
         connection.post('/refund', { transaction: transaction_reference_or_id })
       end
     end
@@ -41,7 +41,7 @@ module PaystackGateway
     end
 
     api_method def self.list_refunds(transaction_id:)
-      with_response(ListRefundsResponse) do |connection|
+      use_connection do |connection|
         connection.get('/refund', { transaction: transaction_id })
       end
     end
@@ -53,7 +53,7 @@ module PaystackGateway
     end
 
     api_method def self.fetch_refund(refund_id:)
-      with_response(FetchRefundResponse) do |connection|
+      use_connection do |connection|
         connection.get("/refund/#{refund_id}")
       end
     end

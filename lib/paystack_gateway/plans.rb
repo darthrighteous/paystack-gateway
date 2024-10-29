@@ -13,7 +13,7 @@ module PaystackGateway
     end
 
     api_method def self.create_plan(name:, amount:, interval:)
-      with_response(CreatePlanResponse) do |connection|
+      use_connection do |connection|
         connection.post(
           '/plan',
           {
@@ -37,7 +37,7 @@ module PaystackGateway
     end
 
     api_method def self.list_plans
-      with_response(ListPlansResponse) do |connection|
+      use_connection do |connection|
         connection.get('/plan')
       end
     end
@@ -60,7 +60,7 @@ module PaystackGateway
     end
 
     api_method def self.fetch_plan(code:)
-      with_response(FetchPlanResponse) do |connection|
+      use_connection do |connection|
         connection.get("/plan/#{code}")
       end
     end
@@ -68,7 +68,7 @@ module PaystackGateway
     class UpdatePlanResponse < PaystackGateway::Response; end
 
     api_method def self.update_plan(code:, amount:, interval:)
-      with_response(UpdatePlanResponse) do |connection|
+      use_connection do |connection|
         connection.put(
           "/plan/#{code}",
           {

@@ -34,7 +34,7 @@ module PaystackGateway
 
       transaction_data[:amount] = (transaction_data[:amount] * 100).to_i
 
-      with_response(InitializeTransactionResponse) do |connection|
+      use_connection do |connection|
         connection.post('/transaction/initialize', transaction_data.compact)
       end
     end
@@ -62,7 +62,7 @@ module PaystackGateway
     api_method def self.verify_transaction(reference:)
       raise VerifyTransactionError, :invalid_reference if reference.blank?
 
-      with_response(VerifyTransactionResponse) do |connection|
+      use_connection do |connection|
         connection.get("/transaction/verify/#{reference}")
       end
     end
@@ -80,7 +80,7 @@ module PaystackGateway
 
       transaction_data[:amount] = (transaction_data[:amount] * 100).to_i
 
-      with_response(ChargeAuthorizationResponse) do |connection|
+      use_connection do |connection|
         connection.post('/transaction/charge_authorization', transaction_data.compact)
       end
     end

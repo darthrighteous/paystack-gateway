@@ -23,7 +23,7 @@ module PaystackGateway
 
       private
 
-      def with_response(response_class = Current.response_class, cache_options: nil)
+      def use_connection(response_class = Current.response_class, cache_options: nil)
         connection = Faraday.new(BASE_URL) do |conn|
           conn.request :json
           conn.request :authorization, 'Bearer', PaystackGateway.secret_key

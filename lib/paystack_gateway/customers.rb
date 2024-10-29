@@ -19,7 +19,7 @@ module PaystackGateway
     end
 
     api_method def self.create_customer(email:, first_name:, last_name:)
-      with_response(CreateCustomerResponse) do |connection|
+      use_connection do |connection|
         connection.post('/customer', { email:, first_name:, last_name: })
       end
     end
@@ -36,7 +36,7 @@ module PaystackGateway
     end
 
     api_method def self.fetch_customer(email:)
-      with_response(FetchCustomerResponse) do |connection|
+      use_connection do |connection|
         connection.get("/customer/#{email}")
       end
     end

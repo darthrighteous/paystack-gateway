@@ -22,9 +22,11 @@ module PaystackGateway
     end
 
     api_method def self.resolve_account_number(account_number:, bank_code:)
-      with_response(ResolveAccountNumberResponse) do |connection|
-        connection.response :caching, cache_store
-        connection.get("/bank/resolve?account_number=#{account_number}&bank_code=#{bank_code}")
+      use_connection(cache_options: {}) do |connection|
+        connection.get(
+          '/bank/resolve',
+          { account_number: account_number, bank_code: bank_code },
+        )
       end
     end
   end

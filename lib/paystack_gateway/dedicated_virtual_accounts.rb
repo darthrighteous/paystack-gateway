@@ -11,7 +11,7 @@ module PaystackGateway
     class CreateDedicatedVirtualAccountResponse < PaystackGateway::Response; end
 
     api_method def self.create_dedicated_virtual_account(customer_id_or_code:, subaccount_code:, preferred_bank:)
-      with_response(CreateDedicatedVirtualAccountResponse) do |connection|
+      use_connection do |connection|
         connection.post(
           '/dedicated_account',
           {
@@ -30,7 +30,7 @@ module PaystackGateway
     api_method def self.assign_dedicated_virtual_account(
       email:, first_name:, last_name:, subaccount_code:, preferred_bank:
     )
-      with_response(AssignDedicatedVirtualAccountResponse) do |connection|
+      use_connection do |connection|
         connection.post(
           '/dedicated_account/assign',
           {
@@ -49,7 +49,7 @@ module PaystackGateway
     class SplitDedicatedAccountTransactionResponse < PaystackGateway::Response; end
 
     api_method def self.split_dedicated_account_transaction(customer_id_or_code:, subaccount_code:)
-      with_response(SplitDedicatedAccountTransactionResponse) do |connection|
+      use_connection do |connection|
         connection.post('/dedicated_account/split', { customer: customer_id_or_code, subaccount: subaccount_code })
       end
     end
@@ -58,7 +58,7 @@ module PaystackGateway
     class RequeryDedicatedAccountResponse < PaystackGateway::Response; end
 
     api_method def self.requery_dedicated_account(account_number:, bank:)
-      with_response(RequeryDedicatedAccountResponse) do |connection|
+      use_connection do |connection|
         connection.get('/dedicated_account', { account_number:, provider_slug: bank })
       end
     end

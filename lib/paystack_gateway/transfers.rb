@@ -28,7 +28,7 @@ module PaystackGateway
     end
 
     api_method def self.initiate_transfer(amount:, recipient_code:, reference:, reason: nil)
-      response = with_response(InitiateTransferResponse) do |connection|
+      response = use_connection do |connection|
         connection.post(
           '/transfer',
           {
@@ -51,7 +51,7 @@ module PaystackGateway
     end
 
     api_method def self.verify_transfer(reference:)
-      with_response(VerifyTransferResponse) do |connection|
+      use_connection do |connection|
         connection.get("/transfer/verify/#{reference}")
       end
     end

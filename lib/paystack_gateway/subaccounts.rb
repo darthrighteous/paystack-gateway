@@ -11,7 +11,7 @@ module PaystackGateway
     end
 
     api_method def self.create_subaccount(business_name:, settlement_bank:, account_number:, percentage_charge:)
-      with_response(CreateSubaccountResponse) do |connection|
+      use_connection do |connection|
         connection.post(
           '/subaccount',
           { business_name:, settlement_bank:, account_number:, percentage_charge: }.compact,
@@ -26,7 +26,7 @@ module PaystackGateway
       subaccount_code,
       business_name: nil, settlement_bank: nil, account_number: nil, percentage_charge: nil
     )
-      with_response(UpdateSubaccountResponse) do |connection|
+      use_connection do |connection|
         connection.put(
           "/subaccount/#{subaccount_code}",
           { business_name:, settlement_bank:, account_number:, percentage_charge: }.compact,

@@ -19,12 +19,7 @@ module PaystackGateway
 
     # https://paystack.com/docs/api/miscellaneous/#bank
     api_method def self.list_banks(use_cache: true, pay_with_bank_transfer: false)
-      cache_options =
-        if use_cache
-          { cache_key: pay_with_bank_transfer ? 'pay_with_bank_transfer' : nil }
-        end
-
-      with_response(ListBanksResponse, cache_options:) do |connection|
+      use_connection(cache_options: use_cache ? {} : nil) do |connection|
         connection.get('/bank', pay_with_bank_transfer ? { pay_with_bank_transfer: } : {})
       end
     end

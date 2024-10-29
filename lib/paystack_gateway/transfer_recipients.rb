@@ -12,7 +12,7 @@ module PaystackGateway
     end
 
     api_method def self.create_transfer_recipient(name:, account_number:, bank_code:)
-      with_response(CreateTransferRecipientResponse) do |connection|
+      use_connection do |connection|
         connection.post(
           '/transferrecipient',
           { type: :nuban, name: name, account_number: account_number, bank_code: bank_code, currency: :NGN },
