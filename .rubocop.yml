@@ -7,9 +7,12 @@ AllCops:
   NewCops: enable
 
 Metrics/AbcSize:
-  Max: 20
+  Max: 25
 Metrics/MethodLength:
   Max: 25
+Naming/FileName:
+  Exclude:
+    - lib/paystack-gateway.rb
 Style/NegatedIf:
   Enabled: false
 Style/TrailingCommaInArrayLiteral:
