@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class TestCustomers < Minitest::Test
+class CustomersTest < Minitest::Test
   def test_create_customer_fails_with_invalid_email
     VCR.use_cassette 'customers/create_customer_failure' do
       error = assert_raises PaystackGateway::ApiError do

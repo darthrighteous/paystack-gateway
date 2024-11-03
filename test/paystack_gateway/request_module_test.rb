@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class TestRequestModule < Minitest::Test
+class RequestModuleTest < Minitest::Test
   module MockRequestModule
     include PaystackGateway::RequestModule
 
@@ -55,7 +55,7 @@ class TestRequestModule < Minitest::Test
 
   def test_api_methods_are_decorated_with_error_handling
     logger_error_mock = Minitest::Mock.new
-    logger_error_mock.expect(:call, nil, [/TestRequestModule::MockRequestModule#mock_api_error_method:.*404/])
+    logger_error_mock.expect(:call, nil, [/RequestModuleTest::MockRequestModule#mock_api_error_method:.*404/])
     logger_error_mock.expect(
       :call,
       nil,

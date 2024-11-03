@@ -15,6 +15,10 @@ class ConfigurationTest < Minitest::Test
 end
 
 class PaystackGatewayTest < Minitest::Test
+  def teardown
+    PaystackGateway.config = PaystackGateway::Configuration.new
+  end
+
   def test_default_config
     assert_instance_of PaystackGateway::Configuration, PaystackGateway.config
   end
