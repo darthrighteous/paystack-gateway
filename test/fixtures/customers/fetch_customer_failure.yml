@@ -1,0 +1,68 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.paystack.co/customer/fakeemail@unknown.com
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.12.0
+      Authorization:
+      - Bearer <API_TOKEN>
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      date:
+      - Sun, 03 Nov 2024 16:38:51 GMT
+      content-type:
+      - application/json; charset=utf-8
+      transfer-encoding:
+      - chunked
+      connection:
+      - keep-alive
+      x-amzn-requestid:
+      - cdcbae03-df3f-4c73-aa5d-5976e3d2be8f
+      access-control-allow-origin:
+      - "*"
+      x-amzn-remapped-content-length:
+      - '222'
+      x-amzn-remapped-connection:
+      - keep-alive
+      set-cookie:
+      - sails.sid=s%3AqeW0kDEKu-9GMz0l8mLZhikdA-1I9LPZ.KNZNX98BzZOI6l8eqfyx0EMxtpxOBvUnuxblmzkY1CI;
+        Path=/; HttpOnly; Secure; SameSite=Lax, __cf_bm=BY.RwqjboMUwaZCbFSFk32eKIoHfq35S1pLHAQmsoEk-1730651931-1.0.1.1-_kUrxxhv9bf8QQcf6wijfgDk1nBj7Gb_4TxqMpuJ0jcK1.pG1HnQ9U0I7aGcFTdvfGDdTU5nBB5mUP2xxIJ2SA;
+        path=/; expires=Sun, 03-Nov-24 17:08:51 GMT; domain=.paystack.co; HttpOnly;
+        Secure; SameSite=None
+      x-amz-apigw-id:
+      - ArcMZFZQDoEEfwA=
+      vary:
+      - Accept-Encoding
+      x-amzn-remapped-server:
+      - nginx
+      etag:
+      - W/"de-eC7EhiyKqQs9rmGDlrPLaQ"
+      x-amzn-remapped-date:
+      - Sun, 03 Nov 2024 16:38:51 GMT
+      cf-cache-status:
+      - DYNAMIC
+      strict-transport-security:
+      - max-age=15552000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      server:
+      - cloudflare
+      cf-ray:
+      - 8dcdcc0cf999d096-CDG
+      content-encoding:
+      - gzip
+    body:
+      encoding: UTF-8
+      string: '{"status":false,"message":"Customer not found","meta":{"nextStep":"Ensure
+        that you''re passing the customer code or email of a customer that exists
+        on the integration"},"type":"validation_error","code":"customer_not_found"}'
+  recorded_at: Sun, 03 Nov 2024 16:38:51 GMT
+recorded_with: VCR 6.3.1

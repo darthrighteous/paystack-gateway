@@ -1,0 +1,72 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.paystack.co/customer
+    body:
+      encoding: UTF-8
+      string: '{"email":"test@example.com","first_name":"Test","last_name":"User"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <API_TOKEN>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Sun, 03 Nov 2024 16:29:08 GMT
+      content-type:
+      - application/json; charset=utf-8
+      transfer-encoding:
+      - chunked
+      connection:
+      - keep-alive
+      x-amzn-requestid:
+      - '09b034bd-fbef-4568-8c72-a24767d64ae1'
+      access-control-allow-origin:
+      - "*"
+      x-amzn-remapped-content-length:
+      - '410'
+      x-amzn-remapped-connection:
+      - keep-alive
+      x-ratelimit-remaining:
+      - '4'
+      set-cookie:
+      - sails.sid=s%3AB1OM35r_BNZMuNLuFx3NobA6f6WjEHx5.zDn2pSf7BIO7Fxlnd523%2Fu%2FyR6UQf%2FqymbCsNqesMFg;
+        Path=/; HttpOnly; Secure; SameSite=Lax, __cf_bm=IPzpqLERYIG5gGfowYwe.EOEJVRAqJr6NE39_E6L72k-1730651348-1.0.1.1-XstUbsw0CyESoSBzawtrmlrpyTY4H_4JFPJTP.h6pHY4vfZ7.3o9dCyimQKC75UCPoTDOr2qYa.vE4qUuttJlA;
+        path=/; expires=Sun, 03-Nov-24 16:59:08 GMT; domain=.paystack.co; HttpOnly;
+        Secure; SameSite=None
+      x-amz-apigw-id:
+      - AraxRFtJjoEEhmw=
+      vary:
+      - X-HTTP-Method-Override, Accept-Encoding
+      x-amzn-remapped-server:
+      - nginx
+      x-ratelimit-limit:
+      - '5'
+      etag:
+      - W/"19a-iOpnM66fHc2OHsyqIyBCAw"
+      x-amzn-remapped-date:
+      - Sun, 03 Nov 2024 16:29:08 GMT
+      cf-cache-status:
+      - DYNAMIC
+      strict-transport-security:
+      - max-age=15552000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      server:
+      - cloudflare
+      cf-ray:
+      - 8dcdbdd03f9a0187-CDG
+      content-encoding:
+      - gzip
+    body:
+      encoding: UTF-8
+      string: '{"status":true,"message":"Customer created","data":{"transactions":[],"subscriptions":[],"authorizations":[],"email":"test@example.com","first_name":"Test","last_name":"User","integration":735006,"domain":"test","customer_code":"CUS_xsrozmbt8g1oear","risk_action":"default","id":203316808,"createdAt":"2024-11-03T16:29:08.649Z","updatedAt":"2024-11-03T16:29:08.649Z","identified":false,"identifications":null}}'
+  recorded_at: Sun, 03 Nov 2024 16:29:08 GMT
+recorded_with: VCR 6.3.1

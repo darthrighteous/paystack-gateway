@@ -1,0 +1,71 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.paystack.co/customer
+    body:
+      encoding: UTF-8
+      string: '{"email":"fakeemail","first_name":null,"last_name":null}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <API_TOKEN>
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      date:
+      - Sun, 03 Nov 2024 16:20:22 GMT
+      content-type:
+      - application/json; charset=utf-8
+      content-length:
+      - '183'
+      connection:
+      - keep-alive
+      x-amzn-requestid:
+      - d949539f-5b74-4eab-8d71-c9f0a730c23c
+      access-control-allow-origin:
+      - "*"
+      x-amzn-remapped-content-length:
+      - '183'
+      x-amzn-remapped-connection:
+      - keep-alive
+      x-ratelimit-remaining:
+      - '5'
+      set-cookie:
+      - sails.sid=s%3AnYZr6wvTGZH5vSFHfyhiV-4D8QTUIdcS.M4lbbcZPvMLPnQFeQmFQZtAO%2BOXA9m0y0SDpldt%2FKBs;
+        Path=/; HttpOnly; Secure; SameSite=Lax, __cf_bm=fzSP33DOrYh79XrAGf9vtuYdw_ys4VaGRMwRuAuaGo8-1730650822-1.0.1.1-jLcDZuz1DArfIlP77JyMe_OCPTKhauQV2w.yOUmQsa0h9G1AizQJ.._h.289k0z0jEQZOTAey9dFKkV5q3uiEQ;
+        path=/; expires=Sun, 03-Nov-24 16:50:22 GMT; domain=.paystack.co; HttpOnly;
+        Secure; SameSite=None
+      x-amz-apigw-id:
+      - ArZfAF81DoEEp4Q=
+      vary:
+      - X-HTTP-Method-Override, Accept-Encoding
+      x-amzn-remapped-server:
+      - nginx
+      x-ratelimit-limit:
+      - '5'
+      etag:
+      - W/"b7-9QVjncOC5Ezegv6NJuFDaQ"
+      x-amzn-remapped-date:
+      - Sun, 03 Nov 2024 16:20:22 GMT
+      cf-cache-status:
+      - DYNAMIC
+      strict-transport-security:
+      - max-age=15552000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      server:
+      - cloudflare
+      cf-ray:
+      - 8dcdb0f5dbf4047b-CDG
+    body:
+      encoding: UTF-8
+      string: '{"status":false,"message":"\"email\" must be a valid email","meta":{"nextStep":"Ensure
+        that the value(s) you''re passing are valid."},"type":"validation_error","code":"invalid_params"}'
+  recorded_at: Sun, 03 Nov 2024 16:20:21 GMT
+recorded_with: VCR 6.3.1

@@ -1,0 +1,66 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.paystack.co/customer/test@example.com
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.12.0
+      Authorization:
+      - Bearer <API_TOKEN>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Sun, 03 Nov 2024 16:41:18 GMT
+      content-type:
+      - application/json; charset=utf-8
+      transfer-encoding:
+      - chunked
+      connection:
+      - keep-alive
+      x-amzn-requestid:
+      - 2053479d-6b0f-41be-a407-e278ab9822bd
+      access-control-allow-origin:
+      - "*"
+      x-amzn-remapped-content-length:
+      - '622'
+      x-amzn-remapped-connection:
+      - keep-alive
+      set-cookie:
+      - sails.sid=s%3AUKDSQ8mq-COoEERPzNpoKX4qNnOhQ4OI.A22gS%2FJWEtl8xqKv%2F6JRgMPWsgkyXXwlqdGGuhWh3pw;
+        Path=/; HttpOnly; Secure; SameSite=Lax, __cf_bm=ZUe0zEhm906sjiUwRrTHKp5jlcWP9eyF2pp8PEtfZ4c-1730652078-1.0.1.1-GVzoHaxSOr7Q0WS2pGiiluI.mugM7PFyt4x.sR8pJCWtuHYgaJSTx15z7H0NCJufS2Bwtnq9r1ELB3gdkev4PQ;
+        path=/; expires=Sun, 03-Nov-24 17:11:18 GMT; domain=.paystack.co; HttpOnly;
+        Secure; SameSite=None
+      x-amz-apigw-id:
+      - ArcjPFH0joEELVA=
+      vary:
+      - Accept-Encoding
+      x-amzn-remapped-server:
+      - nginx
+      etag:
+      - W/"26e-dvNOL54ogzt4t9MGLJzMfw"
+      x-amzn-remapped-date:
+      - Sun, 03 Nov 2024 16:41:18 GMT
+      cf-cache-status:
+      - DYNAMIC
+      strict-transport-security:
+      - max-age=15552000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      server:
+      - cloudflare
+      cf-ray:
+      - 8dcdcf9f2b8101b9-CDG
+      content-encoding:
+      - gzip
+    body:
+      encoding: UTF-8
+      string: '{"status":true,"message":"Customer retrieved","data":{"transactions":[],"subscriptions":[],"authorizations":[],"first_name":"Test","last_name":"User","email":"test@example.com","phone":null,"metadata":null,"domain":"test","customer_code":"CUS_xsrozmbt8g1oear","risk_action":"default","id":203316808,"integration":735006,"createdAt":"2024-11-03T16:29:08.000Z","updatedAt":"2024-11-03T16:29:08.000Z","created_at":"2024-11-03T16:29:08.000Z","updated_at":"2024-11-03T16:29:08.000Z","total_transactions":0,"total_transaction_value":[],"dedicated_account":null,"dedicated_accounts":[],"identified":false,"identifications":null}}'
+  recorded_at: Sun, 03 Nov 2024 16:41:17 GMT
+recorded_with: VCR 6.3.1
