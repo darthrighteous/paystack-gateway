@@ -18,6 +18,7 @@ module PaystackGateway
       WebhookResponse.new(parsed_body.deep_symbolize_keys)
     end
 
+    # https://paystack.com/docs/payments/webhooks/#signature-validation
     def self.valid_webhook?(request_headers, request_body)
       request_signature = request_headers['X-Paystack-Signature']
       return false if request_signature.blank?

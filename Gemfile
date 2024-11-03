@@ -12,4 +12,5 @@ group :development do
   gem 'rubocop', '~> 1.21'
   gem 'rubocop-minitest'
   gem 'rubocop-rake'
+  gem 'vcr', '~> 6.3', '>= 6.3.1'
 end

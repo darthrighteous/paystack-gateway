@@ -1,0 +1,56 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.paystack.co/mock_failure
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.12.0
+      Authorization:
+      - 'Bearer '
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      date:
+      - Sun, 03 Nov 2024 15:48:04 GMT
+      content-type:
+      - application/json
+      content-length:
+      - '0'
+      connection:
+      - keep-alive
+      x-amzn-requestid:
+      - 3c6e9ea0-72cd-4fcf-a1aa-79095ae68d4b
+      x-amzn-remapped-connection:
+      - keep-alive
+      set-cookie:
+      - sails.sid=s%3ASnPc98BN_JUfdy7Y9r_cMeA_P2nggOD9.X1eQRJpJU3uhaNoisjArZs9W9kNeJ9HEQ%2F1nxbwFC00;
+        Path=/; HttpOnly; Secure; SameSite=Lax, __cf_bm=gOL3OYVq6jQhNJoaCKnHicG2gJ3m9VAF3UiXXuUKKPo-1730648884-1.0.1.1-VymZ_4ZMDTcL5Y8k2JuzdQfRsiz1dPZMkPzF6qBY0ffwa0wb2dJRr9VV8YOEB.kOn.DMnjLynAOJmHjh3hSotQ;
+        path=/; expires=Sun, 03-Nov-24 16:18:04 GMT; domain=.paystack.co; HttpOnly;
+        Secure; SameSite=None
+      x-amz-apigw-id:
+      - ArUwUElnjoEEJ1Q=
+      x-amzn-remapped-server:
+      - nginx
+      x-amzn-remapped-date:
+      - Sun, 03 Nov 2024 15:48:04 GMT
+      cf-cache-status:
+      - DYNAMIC
+      strict-transport-security:
+      - max-age=15552000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      server:
+      - cloudflare
+      cf-ray:
+      - 8dcd81aa5b616f7e-CDG
+    body:
+      encoding: UTF-8
+      string: ''
+  recorded_at: Sun, 03 Nov 2024 15:48:04 GMT
+recorded_with: VCR 6.3.1

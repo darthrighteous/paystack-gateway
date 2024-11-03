@@ -1,0 +1,76 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.paystack.co/country
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.12.0
+      Authorization:
+      - 'Bearer '
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Fri, 01 Nov 2024 15:07:19 GMT
+      content-type:
+      - application/json; charset=utf-8
+      content-length:
+      - '1271'
+      connection:
+      - keep-alive
+      x-amzn-requestid:
+      - 18dba303-add3-4a71-954c-88706712c2df
+      access-control-allow-origin:
+      - "*"
+      content-encoding:
+      - gzip
+      x-amzn-remapped-connection:
+      - keep-alive
+      set-cookie:
+      - sails.sid=s%3A5_Kcj13Wm2bfFBaWzgqmeAt1jk87cgwB.ObSsDQJ08Nd1RQZeJDDAafFKIhO8YmOcFMREbGPNS6Q;
+        Path=/; HttpOnly; Secure; SameSite=Lax, __cf_bm=N7Zys9_hJI_WcGxdiKnr8J4UNxZvAqTDJ_AXT0MzQjI-1730473639-1.0.1.1-znTxW4A1rFKoJGUJPgc1utNDHpaoQMhEQnPd0wEW7HliRIoyoFrpAActkFRfKNY7JxXT1p8szmMw3npTekbviw;
+        path=/; expires=Fri, 01-Nov-24 15:37:19 GMT; domain=.paystack.co; HttpOnly;
+        Secure; SameSite=None
+      x-amz-apigw-id:
+      - Ako6NHNvDoEEWyw=
+      vary:
+      - Accept-Encoding
+      x-amzn-remapped-server:
+      - nginx
+      etag:
+      - W/"1dc0-6+6RWZb/rQh/sXjxLQjS4w"
+      x-amzn-remapped-date:
+      - Fri, 01 Nov 2024 15:07:19 GMT
+      cf-cache-status:
+      - DYNAMIC
+      strict-transport-security:
+      - max-age=15552000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      server:
+      - cloudflare
+      cf-ray:
+      - 8dbccb35df1366b2-AMS
+    body:
+      encoding: UTF-8
+      string: '{"status":true,"message":"Countries retrieved","data":[{"id":1,"active_for_dashboard_onboarding":true,"name":"Nigeria","iso_code":"NG","default_currency_code":"NGN","integration_defaults":{},"calling_code":"+234","pilot_mode":false,"relationships":{"currency":{"type":"currency","data":["NGN"],"supported_currencies":{"NGN":{"bank":{"bank_type":"nuban","branch_code":false,"branch_code_type":"text","account_name":false,"account_verification_required":true,"account_number_label":"accountNumber","account_number_pattern":{"exact_match":true,"pattern":"[0-9]{10}"},"documents":[],"show_account_number_tooltip":false}},"USD":{"bank":{"bank_type":"nuban","required_fields":["bank","account_number"],"branch_code":false,"branch_code_type":"text","account_name":false,"account_verification_required":true,"account_number_label":"accountNumber","account_number_pattern":{"exact_match":true,"pattern":""},"documents":[],"notices":["USD
+        can currently only be settled into Zenith Bank USD accounts.","You''ll receive
+        USD settlements 7 working days after payment has been made.","In case of fraudulent
+        transactions involving international payments, Paystack will reverse the transaction
+        and deduct the amount from your balance."]}}}},"integration_feature":{"type":"integration_feature","data":[]},"integration_type":{"type":"integration_type","data":["ITYPE_001","ITYPE_002","ITYPE_003"]},"payment_method":{"type":"payment_method","data":["PAYM_001","PAYM_002","PAYM_003","PAYM_004"]}},"can_go_live_automatically":true},{"id":2,"active_for_dashboard_onboarding":true,"name":"Ghana","iso_code":"GH","default_currency_code":"GHS","integration_defaults":{},"calling_code":"+233","pilot_mode":false,"relationships":{"currency":{"type":"currency","data":["GHS"],"supported_currencies":{"GHS":{"bank":{"bank_type":"ghipss","account_verification_required":true,"account_number_label":"accountNumber","branch_code":true,"branch_code_type":"dropdown","account_name":false,"account_number_pattern":{"exact_match":true,"pattern":"[0-9]{7,16}"},"documents":[],"show_account_number_tooltip":false},"mobile_money":{"bank_type":"mobile_money","phone_number_label":"phoneNumber","placeholder":"050
+        123 456","account_number_pattern":{"exact_match":false,"pattern":"^[0-9]{10}$"}}}}},"integration_feature":{"type":"integration_feature","data":[]},"integration_type":{"type":"integration_type","data":["ITYPE_004","ITYPE_005"]},"payment_method":{"type":"payment_method","data":["PAYM_001"]}},"can_go_live_automatically":true},{"id":3,"active_for_dashboard_onboarding":true,"name":"South
+        Africa","iso_code":"ZA","default_currency_code":"ZAR","calling_code":"+27","integration_defaults":{},"pilot_mode":false,"relationships":{"currency":{"type":"currency","data":["ZAR"],"supported_currencies":{"ZAR":{"bank":{"bank_type":"basa","account_verification_required":true,"account_number_label":"accountNumber","branch_code":false,"branch_code_type":"text","account_name":true,"account_number_pattern":{"exact_match":false,"pattern":"^[0-9]{9,12}$"},"documents":["ZA-BANK"],"show_account_number_tooltip":false},"eft":{"account_number_pattern":{"exact_match":false,"pattern":"^[0-9]{10}$"},"placeholder":"050
+        123 456"}}}},"integration_feature":{"type":"integration_feature","data":[]},"integration_type":{"type":"integration_type","data":["ITYPE_006","ITYPE_007"]},"payment_method":{"type":"payment_method","data":["PAYM_001"]}},"can_go_live_automatically":false},{"id":4,"active_for_dashboard_onboarding":true,"name":"Kenya","iso_code":"KE","default_currency_code":"KES","calling_code":"+254","integration_defaults":{},"pilot_mode":false,"relationships":{"currency":{"type":"currency","data":["KES"],"supported_currencies":{"KES":{"bank":{"bank_type":"kepss","account_verification_required":true,"account_number_label":"accountNumber","branch_code":true,"branch_code_type":"text","account_name":true,"account_number_pattern":{"exact_match":false,"pattern":"[0-9]{9,16}"},"documents":[],"show_account_number_tooltip":false},"mobile_money":{"bank_type":"mobile_money","phone_number_label":"phoneNumber","placeholder":"070
+        123 456","account_number_pattern":{"exact_match":false,"pattern":"^[0-9]{10}$"}},"mobile_money_business":{"bank_type":"mobile_money_business","account_verification_required":false,"phone_number_label":"accountNumber","account_number_pattern":{"exact_match":false,"pattern":"^[0-9]{6,7}$"}}},"USD":{"bank":{"bank_type":"kepss","account_verification_required":false,"required_fields":["bank","account_number","branch_code","account_name"],"account_number_label":"accountNumber","branch_code":true,"branch_code_type":"text","account_name":false,"account_number_pattern":{"exact_match":false,"pattern":"[0-9]{7,16}"},"notices":["You''ll
+        receive USD settlements 7 working days after payment has been made.","In case
+        of fraudulent transactions involving international payments, Paystack will
+        reverse the transaction and deduct the amount from your next payout."],"show_account_number_tooltip":false}}}},"integration_feature":{"type":"integration_feature","data":[]},"integration_type":{"type":"integration_type","data":["ITYPE_008","ITYPE_009"]},"payment_method":{"type":"payment_method","data":["PAYM_001"]}},"can_go_live_automatically":true},{"id":5,"active_for_dashboard_onboarding":true,"name":"Côte
+        d''Ivoire","iso_code":"CI","default_currency_code":"XOF","calling_code":"+225","integration_defaults":{},"pilot_mode":true,"relationships":{"currency":{"type":"currency","data":["XOF"],"supported_currencies":{"XOF":{"bank":{"bank_type":"bceao","account_verification_required":false,"account_number_label":"rib","branch_code":false,"branch_code_type":"text","account_name":true,"account_number_pattern":{"exact_match":false,"pattern":"^[a-zA-Z]{2}[0-9]{22}"},"documents":["CI-RIB"],"show_account_number_tooltip":true}}}},"integration_feature":{"type":"integration_feature","data":[]},"integration_type":{"type":"integration_type","data":["ITYPE_010","ITYPE_011"]},"payment_method":{"type":"payment_method","data":["PAYM_001"]}},"can_go_live_automatically":true},{"id":6,"active_for_dashboard_onboarding":true,"name":"Egypt","iso_code":"EG","default_currency_code":"EGP","calling_code":"+20","integration_defaults":{},"pilot_mode":true,"relationships":{"currency":{"type":"currency","data":["EGP"],"supported_currencies":{"EGP":{"bank":{"bank_type":"iban","account_verification_required":false,"account_number_label":"iban","branch_code":false,"branch_code_type":"text","account_name":true,"account_number_pattern":{"exact_match":true,"pattern":"^EG[0-9]{27}$"},"documents":[],"show_account_number_tooltip":false}}}},"integration_feature":{"type":"integration_feature","data":[]},"integration_type":{"type":"integration_type","data":["ITYPE_010"]},"payment_method":{"type":"payment_method","data":["PAYM_001"]}},"can_go_live_automatically":true},{"id":7,"active_for_dashboard_onboarding":true,"name":"Rwanda","iso_code":"RW","default_currency_code":"RWF","integration_defaults":{},"calling_code":"+250","pilot_mode":true,"relationships":{"currency":{"type":"currency","data":["RWF"],"supported_currencies":{"RWF":{"bank":{"bank_type":"bnr","branch_code":false,"branch_code_type":"text","account_name":true,"account_verification_required":false,"account_number_label":"accountNumber","account_number_pattern":{"exact_match":true,"pattern":""},"documents":[],"show_account_number_tooltip":false}}}},"integration_feature":{"type":"integration_feature","data":[]},"integration_type":{"type":"integration_type","data":["ITYPE_012","ITYPE_013"]},"payment_method":{"type":"payment_method","data":["PAYM_001"]}},"can_go_live_automatically":true}]}'
+  recorded_at: Fri, 01 Nov 2024 15:07:19 GMT
+recorded_with: VCR 6.3.1

@@ -10,6 +10,8 @@ Metrics/AbcSize:
   Max: 25
 Metrics/MethodLength:
   Max: 25
+Minitest/MultipleAssertions:
+  Enabled: false
 Naming/FileName:
   Exclude:
     - lib/paystack-gateway.rb
