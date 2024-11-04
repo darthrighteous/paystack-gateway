@@ -1,0 +1,67 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.paystack.co/dedicated_account/assign
+    body:
+      encoding: UTF-8
+      string: '{"email":"fakemail","first_name":"Test2","last_name":"User","preferred_bank":null,"country":"NG","subaccount":null}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <API_TOKEN>
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      date:
+      - Mon, 04 Nov 2024 10:54:19 GMT
+      content-type:
+      - application/json; charset=utf-8
+      content-length:
+      - '183'
+      connection:
+      - keep-alive
+      x-amzn-requestid:
+      - 0efec53f-d1d6-4193-93fc-9400c7f5153c
+      access-control-allow-origin:
+      - "*"
+      x-amzn-remapped-content-length:
+      - '183'
+      x-amzn-remapped-connection:
+      - keep-alive
+      set-cookie:
+      - sails.sid=s%3A3aBsJME9jk5on5URO_xhsqH6LN9fj0lE.VYDanJ9cixaIxC9UKO7LUzmeFAk5LC4Me2TDnreMVyE;
+        Path=/; HttpOnly; Secure; SameSite=Lax, __cf_bm=mEtotv4_fmWIcOH_eJul2a7eI4E0NR4dD4gxGtG2r88-1730717659-1.0.1.1-38qWarqCazn6mjYhUOCjfPqZlB537juaS0SgMuEClWWvBQqigCUaLVxM0rE8FsMAf6xgMCsQFrf7pkv30gygJA;
+        path=/; expires=Mon, 04-Nov-24 11:24:19 GMT; domain=.paystack.co; HttpOnly;
+        Secure; SameSite=None
+      x-amz-apigw-id:
+      - At8qRGFfDoEEV7A=
+      vary:
+      - X-HTTP-Method-Override, Accept-Encoding
+      x-amzn-remapped-server:
+      - nginx
+      etag:
+      - W/"b7-9QVjncOC5Ezegv6NJuFDaQ"
+      x-amzn-remapped-date:
+      - Mon, 04 Nov 2024 10:54:19 GMT
+      cf-cache-status:
+      - DYNAMIC
+      strict-transport-security:
+      - max-age=15552000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      server:
+      - cloudflare
+      cf-ray:
+      - 8dd410b81fded1fb-LHR
+    body:
+      encoding: UTF-8
+      string: '{"status":false,"message":"\"email\" must be a valid email","meta":{"nextStep":"Ensure
+        that the value(s) you''re passing are valid."},"type":"validation_error","code":"invalid_params"}'
+  recorded_at: Mon, 04 Nov 2024 10:54:19 GMT
+recorded_with: VCR 6.3.1

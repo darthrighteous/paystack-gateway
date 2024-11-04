@@ -1,0 +1,67 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.paystack.co/dedicated_account
+    body:
+      encoding: UTF-8
+      string: '{"customer":"fake","preferred_bank":null,"subaccount":null,"phone":"+2348011111111"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <API_TOKEN>
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      date:
+      - Mon, 04 Nov 2024 10:41:02 GMT
+      content-type:
+      - application/json; charset=utf-8
+      content-length:
+      - '192'
+      connection:
+      - keep-alive
+      x-amzn-requestid:
+      - 524172d9-0c1d-4f9d-b600-d575f3b3db54
+      access-control-allow-origin:
+      - "*"
+      x-amzn-remapped-content-length:
+      - '192'
+      x-amzn-remapped-connection:
+      - keep-alive
+      set-cookie:
+      - sails.sid=s%3A4ZfREKEq370E_Iob37nPog378DdCamNI.YTmcknoOye9FCRx2m8Gk1QE%2FgKbTA9bBS80adNS7IeE;
+        Path=/; HttpOnly; Secure; SameSite=Lax, __cf_bm=z2EGtZ6a8PQTCuyXCFhDk8dSnF3kRz1q4RLGSqBYrGc-1730716862-1.0.1.1-1UQ8nopI6oX6ldHfA8z6TYlyRAWaoMbHIciuCx4EhoJlvANd85TNTyol8sx8fgxFMq7kjRxd0.w_MansCXAUHw;
+        path=/; expires=Mon, 04-Nov-24 11:11:02 GMT; domain=.paystack.co; HttpOnly;
+        Secure; SameSite=None
+      x-amz-apigw-id:
+      - At6twFIEDoEEWNA=
+      vary:
+      - X-HTTP-Method-Override, Accept-Encoding
+      x-amzn-remapped-server:
+      - nginx
+      etag:
+      - W/"c0-LwYBNxZ2gtg2aYrJb4j3ng"
+      x-amzn-remapped-date:
+      - Mon, 04 Nov 2024 10:41:02 GMT
+      cf-cache-status:
+      - DYNAMIC
+      strict-transport-security:
+      - max-age=15552000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      server:
+      - cloudflare
+      cf-ray:
+      - 8dd3fd437d8163c4-LHR
+    body:
+      encoding: UTF-8
+      string: '{"status":false,"message":"Invalid value for parameter \"customer\"","meta":{"nextStep":"Ensure
+        that the value(s) you''re passing are valid."},"type":"validation_error","code":"invalid_params"}'
+  recorded_at: Mon, 04 Nov 2024 10:41:02 GMT
+recorded_with: VCR 6.3.1

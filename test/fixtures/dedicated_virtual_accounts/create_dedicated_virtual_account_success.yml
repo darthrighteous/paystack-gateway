@@ -1,0 +1,69 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.paystack.co/dedicated_account
+    body:
+      encoding: UTF-8
+      string: '{"customer":"CUS_xsrozmbt8g1oear","preferred_bank":null,"subaccount":null,"phone":"+2348011111111"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <API_TOKEN>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Mon, 04 Nov 2024 10:44:42 GMT
+      content-type:
+      - application/json; charset=utf-8
+      transfer-encoding:
+      - chunked
+      connection:
+      - keep-alive
+      x-amzn-requestid:
+      - 989ccc99-b84d-45b9-8636-34b6bd5be937
+      access-control-allow-origin:
+      - "*"
+      x-amzn-remapped-content-length:
+      - '822'
+      x-amzn-remapped-connection:
+      - keep-alive
+      set-cookie:
+      - sails.sid=s%3AZyEmcNgYy2cU9ZYNT1TPvYYPgoFPugMv.H9fjICUNfzMolqovs5EnPqN2pH9kB8GRR9rBi7%2B7mmQ;
+        Path=/; HttpOnly; Secure; SameSite=Lax, __cf_bm=w0mtqI8bQwMwOIWJT4hq_oPI4I6Fw1ffCiYnBosl350-1730717082-1.0.1.1-_w6laMLObe6ReYN0UZZcAfFGCpSKOC_cHAclQ2_5OQjLSlNshnw3K8VJKthaZJTFJIR0z0FVHJirLSXysYlnjg;
+        path=/; expires=Mon, 04-Nov-24 11:14:42 GMT; domain=.paystack.co; HttpOnly;
+        Secure; SameSite=None
+      x-amz-apigw-id:
+      - At7QJEUGDoEEPjQ=
+      vary:
+      - X-HTTP-Method-Override, Accept-Encoding
+      x-amzn-remapped-server:
+      - nginx
+      etag:
+      - W/"336-QX2stbHN9Hvho3Q6Aon3lA"
+      x-amzn-remapped-date:
+      - Mon, 04 Nov 2024 10:44:42 GMT
+      cf-cache-status:
+      - DYNAMIC
+      strict-transport-security:
+      - max-age=15552000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      server:
+      - cloudflare
+      cf-ray:
+      - 8dd402a33b2194b1-LHR
+      content-encoding:
+      - gzip
+    body:
+      encoding: UTF-8
+      string: '{"status":true,"message":"NUBAN successfully created","data":{"bank":{"name":"Test
+        Bank","id":24,"slug":"test-bank"},"account_name":"TEST-MANAGED-ACCOUNT","account_number":"1238221259","assigned":true,"currency":"NGN","metadata":null,"active":true,"id":10288067,"created_at":"2023-03-03T08:54:02.000Z","updated_at":"2024-11-04T10:44:42.000Z","assignment":{"integration":735006,"assignee_id":203316808,"assignee_type":"Customer","expired":false,"account_type":"PAY-WITH-TRANSFER-RECURRING","assigned_at":"2024-11-04T10:44:42.582Z","expired_at":null,"assignment_expires_at":null},"customer":{"id":203316808,"first_name":"Test","last_name":"User","email":"test@example.com","customer_code":"CUS_xsrozmbt8g1oear","phone":"+2348011111111","metadata":null,"risk_action":"default","international_format_phone":"+2348011111111"}}}'
+  recorded_at: Mon, 04 Nov 2024 10:44:42 GMT
+recorded_with: VCR 6.3.1

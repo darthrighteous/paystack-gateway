@@ -1,0 +1,66 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.paystack.co/dedicated_account?account_number=0000000000&provider_slug=test-bank
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.12.0
+      Authorization:
+      - Bearer <API_TOKEN>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Mon, 04 Nov 2024 11:33:07 GMT
+      content-type:
+      - application/json; charset=utf-8
+      transfer-encoding:
+      - chunked
+      connection:
+      - keep-alive
+      x-amzn-requestid:
+      - 83c995a4-5e4c-48dd-86b8-2929634f5e89
+      access-control-allow-origin:
+      - "*"
+      x-amzn-remapped-content-length:
+      - '144'
+      x-amzn-remapped-connection:
+      - keep-alive
+      set-cookie:
+      - sails.sid=s%3Ae7B3ZEgGPV3q3k4itG6uk_v4BgLq8lfE.SfWgVEBeuAMbZZOvbKtjMbr8jmNaV9cewqsrhA1c20c;
+        Path=/; HttpOnly; Secure; SameSite=Lax, __cf_bm=i3Yyrwesxeg_jiMohlARHhlUG_ZiLZoYvgrH6PY7o84-1730719987-1.0.1.1-T3ZyBLs8ycRyYDsMlWT6uMM1ZK60Svk9p0lQlqHt9spmyARRwIIFI3Y6Tt.det.1TANj02a8MbV2y1ExSj9aRg;
+        path=/; expires=Mon, 04-Nov-24 12:03:07 GMT; domain=.paystack.co; HttpOnly;
+        Secure; SameSite=None
+      x-amz-apigw-id:
+      - AuCWJGF1DoEEqSg=
+      vary:
+      - Accept-Encoding
+      x-amzn-remapped-server:
+      - nginx
+      etag:
+      - W/"90-BIX8s7YBVAp6Ap0X6zahvw"
+      x-amzn-remapped-date:
+      - Mon, 04 Nov 2024 11:33:07 GMT
+      cf-cache-status:
+      - DYNAMIC
+      strict-transport-security:
+      - max-age=15552000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      server:
+      - cloudflare
+      cf-ray:
+      - 8dd44992d9e360e9-LHR
+      content-encoding:
+      - gzip
+    body:
+      encoding: UTF-8
+      string: '{"status":true,"message":"Managed accounts successfully retrieved","data":[],"meta":{"total":0,"skipped":0,"perPage":50,"page":1,"pageCount":0}}'
+  recorded_at: Mon, 04 Nov 2024 11:33:07 GMT
+recorded_with: VCR 6.3.1
