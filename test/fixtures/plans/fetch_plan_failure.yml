@@ -1,0 +1,67 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.paystack.co/plan/fake_plan_code
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.12.0
+      Authorization:
+      - Bearer <API_TOKEN>
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      date:
+      - Mon, 04 Nov 2024 12:20:09 GMT
+      content-type:
+      - application/json; charset=utf-8
+      transfer-encoding:
+      - chunked
+      connection:
+      - keep-alive
+      x-amzn-requestid:
+      - 3927c3cf-ea2b-4198-b420-cf17a53ff0cb
+      access-control-allow-origin:
+      - "*"
+      x-amzn-remapped-content-length:
+      - '185'
+      x-amzn-remapped-connection:
+      - keep-alive
+      set-cookie:
+      - sails.sid=s%3A6zWqStu0mqt1DWXa7aN3doYoDWnR-ThJ.TLwIieW4jYKf6cuzVy11rv%2Bx6YcUJhCYdQVuV5U9Ii8;
+        Path=/; HttpOnly; Secure; SameSite=Lax, __cf_bm=5wgPQ3q.PELHuQduKbaNvekKCc7oSqOeXdBIOfdgQ4A-1730722809-1.0.1.1-ci18PPuRn4vppE6P36KaV.Z2QzUVsMUbIhgn3HV2cnmkNDwBdqPMmOpZ2XjIICQzDIoSoEOqQ2Bg34rbfXSmSg;
+        path=/; expires=Mon, 04-Nov-24 12:50:09 GMT; domain=.paystack.co; HttpOnly;
+        Secure; SameSite=None
+      x-amz-apigw-id:
+      - AuJPDFsBDoEEB4A=
+      vary:
+      - Accept-Encoding
+      x-amzn-remapped-server:
+      - nginx
+      etag:
+      - W/"b9-5GEhY/HtWNEJXsl5SB6pcA"
+      x-amzn-remapped-date:
+      - Mon, 04 Nov 2024 12:20:09 GMT
+      cf-cache-status:
+      - DYNAMIC
+      strict-transport-security:
+      - max-age=15552000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      server:
+      - cloudflare
+      cf-ray:
+      - 8dd48e773a6e6548-LHR
+      content-encoding:
+      - gzip
+    body:
+      encoding: UTF-8
+      string: '{"status":false,"message":"Plan ID/code specified is invalid","meta":{"nextStep":"Ensure
+        that the value(s) you''re passing are valid."},"type":"validation_error","code":"invalid_params"}'
+  recorded_at: Mon, 04 Nov 2024 12:20:09 GMT
+recorded_with: VCR 6.3.1

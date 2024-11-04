@@ -1,0 +1,67 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.paystack.co/plan
+    body:
+      encoding: UTF-8
+      string: '{"name":"","interval":"monthly","amount":100,"send_invoices":false,"send_sms":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <API_TOKEN>
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      date:
+      - Mon, 04 Nov 2024 12:05:13 GMT
+      content-type:
+      - application/json; charset=utf-8
+      content-length:
+      - '166'
+      connection:
+      - keep-alive
+      x-amzn-requestid:
+      - 88f91ea3-dcfe-432d-841c-f784c767df3c
+      access-control-allow-origin:
+      - "*"
+      x-amzn-remapped-content-length:
+      - '166'
+      x-amzn-remapped-connection:
+      - keep-alive
+      set-cookie:
+      - sails.sid=s%3AhfYpIQPrNCiW7QKhRnlOC_TjFQy_rDsI.Qq%2FRsqW5KDNLiSk9oXgsj%2FkrYeUTtgR9wOH%2FvZwpRfQ;
+        Path=/; HttpOnly; Secure; SameSite=Lax, __cf_bm=OnINMZSvdN.LjIfstHWWkVNMGeYx2pG3Irm8q2CCVIk-1730721913-1.0.1.1-OhmRE.xOIVsiXZfrzNdEnNLgFmYWFQNOpo.OEBwKy8sXw2p2ebhDJVhkb5YE6cV73qVnOhgDxc_Ji2TS7kYE0A;
+        path=/; expires=Mon, 04-Nov-24 12:35:13 GMT; domain=.paystack.co; HttpOnly;
+        Secure; SameSite=None
+      x-amz-apigw-id:
+      - AuHDBEWCjoEEDxw=
+      vary:
+      - X-HTTP-Method-Override, Accept-Encoding
+      x-amzn-remapped-server:
+      - nginx
+      etag:
+      - W/"a6-g8/HZjRu3rTITx+MhXOqyg"
+      x-amzn-remapped-date:
+      - Mon, 04 Nov 2024 12:05:13 GMT
+      cf-cache-status:
+      - DYNAMIC
+      strict-transport-security:
+      - max-age=15552000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      server:
+      - cloudflare
+      cf-ray:
+      - 8dd47896689771e6-LHR
+    body:
+      encoding: UTF-8
+      string: '{"status":false,"message":"\"name\" is not allowed to be empty","meta":{"nextStep":"Provide
+        all required params "},"type":"validation_error","code":"missing_params"}'
+  recorded_at: Mon, 04 Nov 2024 12:05:13 GMT
+recorded_with: VCR 6.3.1

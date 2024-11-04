@@ -1,0 +1,66 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.paystack.co/plan
+    body:
+      encoding: UTF-8
+      string: '{"name":"test plan","interval":"monthly","amount":10000,"send_invoices":false,"send_sms":false}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <API_TOKEN>
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      date:
+      - Mon, 04 Nov 2024 12:07:16 GMT
+      content-type:
+      - application/json; charset=utf-8
+      content-length:
+      - '396'
+      connection:
+      - keep-alive
+      x-amzn-requestid:
+      - bbe399b4-a084-4bdc-b20b-69b295c5fc18
+      access-control-allow-origin:
+      - "*"
+      x-amzn-remapped-content-length:
+      - '396'
+      x-amzn-remapped-connection:
+      - keep-alive
+      set-cookie:
+      - sails.sid=s%3AYInPRoCXTBgQfI2e4wPx6WEQBiJ_Z4aA.FFk3cRapXc9yD9gtyqzhV5cyeK%2BGDdB9prppP%2BHcy%2FY;
+        Path=/; HttpOnly; Secure; SameSite=Lax, __cf_bm=mfpmf0vP4XYT3pq.NInFpsTazxI0gp41GZxhHQ50JGE-1730722036-1.0.1.1-DaxxioUmpnZi9ooIUFqfFVab18IABMKEMmTBZ8nTiUQuAt4YUaenl_xWYC1mpGzx.JsouTGewy8svfTiveIZTw;
+        path=/; expires=Mon, 04-Nov-24 12:37:16 GMT; domain=.paystack.co; HttpOnly;
+        Secure; SameSite=None
+      x-amz-apigw-id:
+      - AuHWUFInjoEEEdA=
+      vary:
+      - X-HTTP-Method-Override, Accept-Encoding
+      x-amzn-remapped-server:
+      - nginx
+      etag:
+      - W/"18c-FK774a2/qBQnSD0ZROLV+Q"
+      x-amzn-remapped-date:
+      - Mon, 04 Nov 2024 12:07:16 GMT
+      cf-cache-status:
+      - DYNAMIC
+      strict-transport-security:
+      - max-age=15552000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      server:
+      - cloudflare
+      cf-ray:
+      - 8dd47b99bf0288c1-LHR
+    body:
+      encoding: UTF-8
+      string: '{"status":true,"message":"Plan created","data":{"name":"test plan","interval":"monthly","amount":10000,"send_invoices":false,"send_sms":false,"integration":735006,"domain":"test","currency":"NGN","plan_code":"PLN_ze8gkd19w1i1gsf","invoice_limit":0,"hosted_page":false,"migrate":false,"is_archived":false,"id":1848188,"createdAt":"2024-11-04T12:07:16.862Z","updatedAt":"2024-11-04T12:07:16.862Z"}}'
+  recorded_at: Mon, 04 Nov 2024 12:07:16 GMT
+recorded_with: VCR 6.3.1

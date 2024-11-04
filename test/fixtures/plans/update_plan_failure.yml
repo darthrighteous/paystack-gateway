@@ -1,0 +1,67 @@
+---
+http_interactions:
+- request:
+    method: put
+    uri: https://api.paystack.co/plan/fake_plan_code
+    body:
+      encoding: UTF-8
+      string: '{"amount":120000,"interval":"annually"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <API_TOKEN>
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      date:
+      - Mon, 04 Nov 2024 12:26:34 GMT
+      content-type:
+      - application/json; charset=utf-8
+      content-length:
+      - '185'
+      connection:
+      - keep-alive
+      x-amzn-requestid:
+      - 4208e329-d058-49ea-ab1c-6978f7f40c07
+      access-control-allow-origin:
+      - "*"
+      x-amzn-remapped-content-length:
+      - '185'
+      x-amzn-remapped-connection:
+      - keep-alive
+      set-cookie:
+      - sails.sid=s%3A5CO0Tgeg574TFgtqL04qOUYb4whTpGYv.oh0WoTW%2FboC0BbEV1axLDxNNKsz4QtuN6mYvPxYxg6s;
+        Path=/; HttpOnly; Secure; SameSite=Lax, __cf_bm=tiYDP69DH61nMnzOJJ5Kg9cSadm6sSXTS3HOFU0fROs-1730723194-1.0.1.1-LuK3QePKroBsVzizTzJY8PiksrvCJxG7isMUx55yAeqVuW2JoCY6mNHNIC1RssGFzdNLVIgcfT4LirHqUmMbhg;
+        path=/; expires=Mon, 04-Nov-24 12:56:34 GMT; domain=.paystack.co; HttpOnly;
+        Secure; SameSite=None
+      x-amz-apigw-id:
+      - AuKLIEcvjoEEqxw=
+      vary:
+      - Accept-Encoding
+      x-amzn-remapped-server:
+      - nginx
+      etag:
+      - W/"b9-5GEhY/HtWNEJXsl5SB6pcA"
+      x-amzn-remapped-date:
+      - Mon, 04 Nov 2024 12:26:34 GMT
+      cf-cache-status:
+      - DYNAMIC
+      strict-transport-security:
+      - max-age=15552000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      server:
+      - cloudflare
+      cf-ray:
+      - 8dd497dadd709445-LHR
+    body:
+      encoding: UTF-8
+      string: '{"status":false,"message":"Plan ID/code specified is invalid","meta":{"nextStep":"Ensure
+        that the value(s) you''re passing are valid."},"type":"validation_error","code":"invalid_params"}'
+  recorded_at: Mon, 04 Nov 2024 12:26:33 GMT
+recorded_with: VCR 6.3.1

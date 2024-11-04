@@ -1,0 +1,68 @@
+---
+http_interactions:
+- request:
+    method: put
+    uri: https://api.paystack.co/plan/PLN_ze8gkd19w1i1gsf
+    body:
+      encoding: UTF-8
+      string: '{"amount":120000,"interval":"annually"}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <API_TOKEN>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Mon, 04 Nov 2024 12:26:46 GMT
+      content-type:
+      - application/json; charset=utf-8
+      transfer-encoding:
+      - chunked
+      connection:
+      - keep-alive
+      x-amzn-requestid:
+      - 770801f6-1c4f-455e-af01-c2e853c85c73
+      access-control-allow-origin:
+      - "*"
+      x-amzn-remapped-content-length:
+      - '68'
+      x-amzn-remapped-connection:
+      - keep-alive
+      set-cookie:
+      - sails.sid=s%3Ak07oP_z_bbvQE02O00eA4CnNs9lkjmFZ.SRG%2BQr1zvBbH7ukWjUjh%2FJ6C1w%2FBRsBo7bquqg8aCag;
+        Path=/; HttpOnly; Secure; SameSite=Lax, __cf_bm=7AzC8PIpXE2siaZ7EEWhZBqwAt_NBwsRnUDBoOk5q8w-1730723206-1.0.1.1-ThFxBy4k9ISAUqSAHVE5oNtVxgYCKxMRvTju1UZngVwuL0t089hERdr_RqIgLzGqr59uMd86umbH5hLQ6k1Feg;
+        path=/; expires=Mon, 04-Nov-24 12:56:46 GMT; domain=.paystack.co; HttpOnly;
+        Secure; SameSite=None
+      x-amz-apigw-id:
+      - AuKNCEXmDoEEDWQ=
+      vary:
+      - Accept-Encoding
+      x-amzn-remapped-server:
+      - nginx
+      etag:
+      - W/"44-ZdjnSnBYvS55eKuJaXMWig"
+      x-amzn-remapped-date:
+      - Mon, 04 Nov 2024 12:26:46 GMT
+      cf-cache-status:
+      - DYNAMIC
+      strict-transport-security:
+      - max-age=15552000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      server:
+      - cloudflare
+      cf-ray:
+      - 8dd498271fa0cd7d-LHR
+      content-encoding:
+      - gzip
+    body:
+      encoding: UTF-8
+      string: '{"status":true,"message":"Plan updated. 0 subscription(s) affected"}'
+  recorded_at: Mon, 04 Nov 2024 12:26:46 GMT
+recorded_with: VCR 6.3.1

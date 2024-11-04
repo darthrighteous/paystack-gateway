@@ -1,0 +1,67 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.paystack.co/plan/PLN_ze8gkd19w1i1gsf
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.12.0
+      Authorization:
+      - Bearer <API_TOKEN>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Mon, 04 Nov 2024 12:24:28 GMT
+      content-type:
+      - application/json; charset=utf-8
+      transfer-encoding:
+      - chunked
+      connection:
+      - keep-alive
+      x-amzn-requestid:
+      - 0d79e3b4-8cd5-4bdd-b03b-1ac683d17e51
+      access-control-allow-origin:
+      - "*"
+      x-amzn-remapped-content-length:
+      - '644'
+      x-amzn-remapped-connection:
+      - keep-alive
+      set-cookie:
+      - sails.sid=s%3ASwl5NupL5ryJ2IWXBNC7nK09XYEW69Fn.WsGwLVdlKxhNayZkitqwW1oZl0ndcfHELjNqvYIzCVk;
+        Path=/; HttpOnly; Secure; SameSite=Lax, __cf_bm=w7JeuTnnO1B87FC2BCU1pwopin0h7Z6VuwEoTXtLrXI-1730723068-1.0.1.1-g7BVEA34MUk_zPsrqPWoKO3nU9d7cEq9ro89hYEkkTOPoaSKGlaV88AMYiR23860PDHl4r2_fAl.QBCa1cktUg;
+        path=/; expires=Mon, 04-Nov-24 12:54:28 GMT; domain=.paystack.co; HttpOnly;
+        Secure; SameSite=None
+      x-amz-apigw-id:
+      - AuJ3dG78joEEPfg=
+      vary:
+      - Accept-Encoding
+      x-amzn-remapped-server:
+      - nginx
+      etag:
+      - W/"284-oW5fRsbAr3Y+/iyFE9n31A"
+      x-amzn-remapped-date:
+      - Mon, 04 Nov 2024 12:24:28 GMT
+      cf-cache-status:
+      - DYNAMIC
+      strict-transport-security:
+      - max-age=15552000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      server:
+      - cloudflare
+      cf-ray:
+      - 8dd494c778858892-LHR
+      content-encoding:
+      - gzip
+    body:
+      encoding: UTF-8
+      string: '{"status":true,"message":"Plan retrieved","data":{"subscriptions":[],"pages":[],"domain":"test","name":"test
+        plan","plan_code":"PLN_ze8gkd19w1i1gsf","description":null,"amount":10000,"interval":"monthly","invoice_limit":0,"send_invoices":false,"send_sms":false,"hosted_page":false,"hosted_page_url":null,"hosted_page_summary":null,"currency":"NGN","migrate":false,"is_deleted":false,"is_archived":false,"id":1848188,"integration":735006,"createdAt":"2024-11-04T12:07:16.000Z","updatedAt":"2024-11-04T12:07:16.000Z","pages_count":0,"subscribers_count":0,"subscriptions_count":0,"active_subscriptions_count":0,"total_revenue":0,"subscribers":[]}}'
+  recorded_at: Mon, 04 Nov 2024 12:24:27 GMT
+recorded_with: VCR 6.3.1
