@@ -1,0 +1,67 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.paystack.co/subaccount
+    body:
+      encoding: UTF-8
+      string: '{"business_name":"","settlement_bank":"057","account_number":"0000000000","percentage_charge":0}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <API_TOKEN>
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      date:
+      - Mon, 04 Nov 2024 12:41:04 GMT
+      content-type:
+      - application/json; charset=utf-8
+      content-length:
+      - '156'
+      connection:
+      - keep-alive
+      x-amzn-requestid:
+      - 12d0b48c-de8f-412c-850a-8765f9d2be88
+      access-control-allow-origin:
+      - "*"
+      x-amzn-remapped-content-length:
+      - '156'
+      x-amzn-remapped-connection:
+      - keep-alive
+      set-cookie:
+      - sails.sid=s%3AWXouNKr6oFTRjkz3TTrpwOehTo6kVLu7.PSQ%2BO%2BqTkTPrLjfqkbVUm4ylMp%2FgCC9r%2BxfrrfKn8u8;
+        Path=/; HttpOnly; Secure; SameSite=Lax, __cf_bm=8KB1YCvZ.QS.w5FQ5xg4F66BK.AZ3tOdbEoCBJCY1uE-1730724064-1.0.1.1-gx6CWsfW5bEmKyVY0RVGZRinIpNPzFJdbCTKSnV2LyW.tx5XDkNlPvvs3OsyKlXvY2RhFDIcM12_VbAujTKr0w;
+        path=/; expires=Mon, 04-Nov-24 13:11:04 GMT; domain=.paystack.co; HttpOnly;
+        Secure; SameSite=None
+      x-amz-apigw-id:
+      - AuMTMElWDoEEr0Q=
+      vary:
+      - X-HTTP-Method-Override, Accept-Encoding
+      x-amzn-remapped-server:
+      - nginx
+      etag:
+      - W/"9c-miJE7uvRCs0F3Qb8zJyxyA"
+      x-amzn-remapped-date:
+      - Mon, 04 Nov 2024 12:41:04 GMT
+      cf-cache-status:
+      - DYNAMIC
+      strict-transport-security:
+      - max-age=15552000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      server:
+      - cloudflare
+      cf-ray:
+      - 8dd4ad1d6f6a655e-AMS
+    body:
+      encoding: UTF-8
+      string: '{"status":false,"message":"Business name is required","meta":{"nextStep":"Provide
+        all required params "},"type":"validation_error","code":"missing_params"}'
+  recorded_at: Mon, 04 Nov 2024 12:41:04 GMT
+recorded_with: VCR 6.3.1

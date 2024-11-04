@@ -1,0 +1,68 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.paystack.co/subaccount
+    body:
+      encoding: UTF-8
+      string: '{"business_name":"Test Business","settlement_bank":"057","account_number":"0000000000","percentage_charge":0}'
+    headers:
+      User-Agent:
+      - Faraday v2.12.0
+      Content-Type:
+      - application/json
+      Authorization:
+      - Bearer <API_TOKEN>
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      date:
+      - Mon, 04 Nov 2024 11:16:22 GMT
+      content-type:
+      - application/json; charset=utf-8
+      content-length:
+      - '523'
+      connection:
+      - keep-alive
+      x-amzn-requestid:
+      - 3907ab63-ca9b-4d54-ac98-a0447078900d
+      access-control-allow-origin:
+      - "*"
+      x-amzn-remapped-content-length:
+      - '523'
+      x-amzn-remapped-connection:
+      - keep-alive
+      set-cookie:
+      - sails.sid=s%3AbCqq9ZyG_1yh45bGgWutXARw79rZ1yOa.BTgs%2FII%2BOAhlovHwJE9F8L119%2FgPUcFag9uH7tX04EI;
+        Path=/; HttpOnly; Secure; SameSite=Lax, __cf_bm=fqPN6KVK1RW1j1aJtP.UNzEjcyBrT5bL_k7jzHReiNo-1730718982-1.0.1.1-A9eT7RhjTjHX_SuKcJPIK4RbJeRk3ysPA49ZeEyB2FwMWhAbAfA1FLsA8gXs2gDgqsqqBPjXVlzd0ixgdUgWOg;
+        path=/; expires=Mon, 04-Nov-24 11:46:22 GMT; domain=.paystack.co; HttpOnly;
+        Secure; SameSite=None
+      x-amz-apigw-id:
+      - At_5BFtwDoEEfRA=
+      vary:
+      - X-HTTP-Method-Override, Accept-Encoding
+      x-amzn-remapped-server:
+      - nginx
+      etag:
+      - W/"20b-xo7BaoGUA77J9C/lR5F/5g"
+      x-amzn-remapped-date:
+      - Mon, 04 Nov 2024 11:16:22 GMT
+      cf-cache-status:
+      - DYNAMIC
+      strict-transport-security:
+      - max-age=15552000; includeSubDomains; preload
+      x-content-type-options:
+      - nosniff
+      server:
+      - cloudflare
+      cf-ray:
+      - 8dd431068dd9718c-LHR
+    body:
+      encoding: UTF-8
+      string: '{"status":true,"message":"Subaccount created","data":{"business_name":"Test
+        Business","account_number":"0000000000","percentage_charge":0,"settlement_bank":"Zenith
+        Bank","currency":"NGN","bank":21,"integration":735006,"domain":"test","account_name":"Test","product":"collection","managed_by_integration":735006,"subaccount_code":"ACCT_ynilx6bhxhgtk0p","is_verified":false,"settlement_schedule":"AUTO","active":true,"migrate":false,"id":1195166,"createdAt":"2024-11-04T11:16:22.243Z","updatedAt":"2024-11-04T11:16:22.243Z"}}'
+  recorded_at: Mon, 04 Nov 2024 11:16:22 GMT
+recorded_with: VCR 6.3.1
