@@ -20,7 +20,7 @@ end
 module Minitest
   module Assertions
     # Fails unless +receiver+ received message +message+, optionally with +args+
-    # (and +kwargs+). The message is stubbed to return +retval+
+    # (and +kwargs+). The message is stubbed to return +return_val+
     #
     # @example Asserting a method call with a block
     #   assert_message(SomeService, :some_method, *args, **kwargs) do
