@@ -9,7 +9,7 @@ class PlansTest < Minitest::Test
         PaystackGateway::Plans.create_plan(name: '', amount: 1, interval: :monthly)
       end
 
-      assert_match /server.*responded.*400.*name.*empty.*/, error.message
+      assert_match(/server.*responded.*400.*name.*empty.*/, error.message)
       assert_equal 400, error.original_error.response_status
     end
   end
@@ -20,8 +20,8 @@ class PlansTest < Minitest::Test
 
       assert_instance_of PaystackGateway::Plans::CreatePlanResponse, response
 
-      assert_equal 1848188, response.id
-      assert_equal 1848188, response.plan_id
+      assert_equal 1_848_188, response.id
+      assert_equal 1_848_188, response.plan_id
       assert_equal 'PLN_ze8gkd19w1i1gsf', response.plan_code
     end
   end
@@ -44,7 +44,7 @@ class PlansTest < Minitest::Test
         PaystackGateway::Plans.fetch_plan(code: 'fake_plan_code')
       end
 
-      assert_match /server.*responded.*404.*Plan ID.*code.*is invalid.*/, error.message
+      assert_match(/server.*responded.*404.*Plan ID.*code.*is invalid.*/, error.message)
       assert_equal 404, error.original_error.response_status
     end
   end
@@ -67,7 +67,7 @@ class PlansTest < Minitest::Test
         PaystackGateway::Plans.update_plan(code: 'fake_plan_code', amount: 1200, interval: :annually)
       end
 
-      assert_match /server.*responded.*400.*Plan ID.*code.*is invalid.*/, error.message
+      assert_match(/server.*responded.*400.*Plan ID.*code.*is invalid.*/, error.message)
       assert_equal 400, error.original_error.response_status
     end
   end

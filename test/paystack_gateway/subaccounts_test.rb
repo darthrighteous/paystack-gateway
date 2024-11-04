@@ -14,7 +14,7 @@ class SubaccountsTest < Minitest::Test
         )
       end
 
-      assert_match /server.*responded.*400.*"Business name is required.*/, error.message
+      assert_match(/server.*responded.*400.*"Business name is required.*/, error.message)
     end
   end
 
@@ -45,7 +45,7 @@ class SubaccountsTest < Minitest::Test
         )
       end
 
-      assert_match /server.*responded.*400.*Account details are invalid.*/, error.message
+      assert_match(/server.*responded.*400.*Account details are invalid.*/, error.message)
     end
   end
 
@@ -60,8 +60,8 @@ class SubaccountsTest < Minitest::Test
       )
 
       assert response.status
-      assert 'Test Business Updated', response.data.business_name
-      assert 'ACCT_ynilx6bhxhgtk0p', response.subaccount_code
+      assert_equal 'Test Business Updated', response.data.business_name
+      assert_equal 'ACCT_ynilx6bhxhgtk0p', response.subaccount_code
     end
   end
 end

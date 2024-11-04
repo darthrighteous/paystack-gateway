@@ -13,7 +13,7 @@ class DedicatedVirtualAccountsTest < Minitest::Test
         )
       end
 
-      assert_match /server.*responded.*400.*Invalid value.*customer.*/, error.message
+      assert_match(/server.*responded.*400.*Invalid value.*customer.*/, error.message)
       assert_equal 400, error.original_error.response_status
     end
   end
@@ -47,7 +47,7 @@ class DedicatedVirtualAccountsTest < Minitest::Test
         )
       end
 
-      assert_match /server.*responded.*400.*must be a valid email.*/, error.message
+      assert_match(/server.*responded.*400.*must be a valid email.*/, error.message)
       assert_equal 400, error.original_error.response_status
     end
   end
@@ -80,7 +80,7 @@ class DedicatedVirtualAccountsTest < Minitest::Test
         )
       end
 
-      assert_match /server.*responded.*400.*Invalid value.*customer.*/, error.message
+      assert_match(/server.*responded.*400.*Invalid value.*customer.*/, error.message)
       assert_equal 400, error.original_error.response_status
     end
   end
