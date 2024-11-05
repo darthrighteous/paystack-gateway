@@ -6,13 +6,13 @@
 Install the gem and add to the application's Gemfile by executing:
 
 ```bash
-$ bundle add PLACEHOLDER_GEM_NAME
+$ bundle add paystack-gateway
 ```
 
 If bundler is not being used to manage dependencies, install the gem by executing:
 
 ```bash
-$ gem install PLACEHOLDER_GEM_NAME
+$ gem install paystack-gateway
 ```
 
 ## Configuration
