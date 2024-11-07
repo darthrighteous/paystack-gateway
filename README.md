@@ -31,7 +31,11 @@ The configuration options are
 PaystackGateway.configure do |config|
   config.secret_key = Rails.application.credentials.dig(:paystack, :secret_key)
   config.logger = Rails.logger
-  config.log_filter = ActiveSupport::ParameterFilter.new(Rails.application.config.filter_parameters).method(:filter)
+  config.log_filter = lambda { |params|
+    next params if !params || !params.respond_to?(:each)
+
+    ActiveSupport::ParameterFilter.new(Rails.application.config.filter_parameters).filter(params)
+  }
 end
 ```
 
