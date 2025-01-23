@@ -54,11 +54,9 @@ module PaystackGateway
       def api_method(method_name)
         @api_method_names ||= Set.new
         @api_method_names << method_name
-
-        decorate_api_methods(method_name)
       end
 
-      def decorate_api_methods(*method_names)
+      def decorate_api_methods(method_names = api_methods)
         singleton_class.class_exec do
           prepend(Module.new do
             method_names.flatten.each do |method_name|

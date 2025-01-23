@@ -14,13 +14,4 @@ module PaystackGateway
       @log_filter = lambda(&:dup)
     end
   end
-
-  class << self
-    attr_writer :config
-
-    delegate :secret_key, :logger, :logging_options, :log_filter, to: :config
-
-    def config = @config ||= Configuration.new
-    def configure = yield(config)
-  end
 end
