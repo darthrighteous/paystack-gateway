@@ -41,7 +41,15 @@ module PaystackGateway
       @cancellable = cancellable
     end
 
-    def network_error? = original_error&.class&.in?(CONNECTION_ERROR_CLASSES)
+    def network_error?
+      return false if !original_error
+
+      original_error.class.ancestors.any? do |ancestor|
+        break if ancestor == Exception
+
+        CONNECTION_ERROR_CLASSES.include?(ancestor)
+      end
+    end
 
     def method_missing(method_name, *)
       return super unless method_name.to_s.end_with?('_error?', '_error!')
