@@ -10,7 +10,7 @@ require 'vcr'
 VCR.configure do |config|
   config.cassette_library_dir = 'test/fixtures'
   config.hook_into :faraday
-  # config.allow_http_connections_when_no_cassette = true
+  config.allow_http_connections_when_no_cassette = false
 
   config.filter_sensitive_data('Bearer <API_TOKEN>') do |interaction|
     interaction.request.headers['Authorization'].first
@@ -32,7 +32,11 @@ module Minitest
 
       receiver.stub(message, mock, &)
 
-      assert_mock mock
+      begin
+        assert_mock mock
+      rescue MockExpectationError
+        raise Minitest::Assertion, "Expected #{receiver} to receive #{message} with #{args.inspect}, but it did not."
+      end
     end
   end
 end
