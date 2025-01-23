@@ -89,7 +89,13 @@ module PaystackGateway
           request_method: response.dig(:request, :method),
           request_url: response.dig(:request, :url),
           request_headers: PaystackGateway.log_filter.call(response.dig(:request, :headers)),
-          request_body: PaystackGateway.log_filter.call(JSON.parse(response.dig(:request, :body) || '{}')),
+          request_body: PaystackGateway.log_filter.call(
+            begin
+              JSON.parse(response.dig(:request, :body) || '{}')
+            rescue JSON::ParserError
+              response.dig(:request, :body)
+            end,
+          ),
 
           response_status: response[:status],
           response_headers: PaystackGateway.log_filter.call(response[:headers]),
