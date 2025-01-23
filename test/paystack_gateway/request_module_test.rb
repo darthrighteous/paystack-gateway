@@ -19,6 +19,8 @@ class RequestModuleTest < Minitest::Test
     end
   end
 
+  MockRequestModule.send(:decorate_api_methods)
+
   def test_module_lists_api_methods
     assert_equal %i[mock_api_method mock_api_error_method], MockRequestModule.api_methods
   end

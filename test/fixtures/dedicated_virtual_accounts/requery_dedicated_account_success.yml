@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.paystack.co/dedicated_account?account_number=0000000000&provider_slug=test-bank
+    uri: https://api.paystack.co/dedicated_account/requery?account_number=0000000000&provider_slug=test-bank
     body:
       encoding: US-ASCII
       string: ''

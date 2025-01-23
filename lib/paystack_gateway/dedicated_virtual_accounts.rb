@@ -54,12 +54,12 @@ module PaystackGateway
       end
     end
 
-    # Response from GET /dedicated_account endpoint
+    # Response from GET /dedicated_account/requery/:account_number endpoint
     class RequeryDedicatedAccountResponse < PaystackGateway::Response; end
 
     api_method def self.requery_dedicated_account(account_number:, bank:)
       use_connection do |connection|
-        connection.get('/dedicated_account', { account_number:, provider_slug: bank })
+        connection.get('/dedicated_account/requery', { account_number:, provider_slug: bank })
       end
     end
   end
