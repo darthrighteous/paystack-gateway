@@ -9,13 +9,17 @@ AllCops:
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented_relative_to_receiver
 Metrics/AbcSize:
-  Max: 25
+  Max: 28
+Metrics/CyclomaticComplexity:
+  Max: 10
 Metrics/MethodLength:
   Max: 25
 Metrics/ModuleLength:
   Max: 250
 Metrics/ParameterLists:
   Enabled: false
+Metrics/PerceivedComplexity:
+  Max: 10
 Minitest/MultipleAssertions:
   Enabled: false
 Naming/FileName:

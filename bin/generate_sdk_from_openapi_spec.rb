@@ -11,6 +11,7 @@ LIB_FILE = File.join(SDK_ROOT, 'lib', 'paystack_gateway.rb')
 OPENAPI_SPEC = File.join(SDK_ROOT, 'openapi', 'base', 'paystack.yaml')
 INDENT = '  '
 WRAP_LINE_LENGTH = 80
+TOP_LEVEL_RESPONSE_KEYS = %w[status message data meta].freeze
 
 def api_methods_by_api_module_name
   @api_methods_by_api_module_name ||=
@@ -92,40 +93,49 @@ def api_method_composition(api_module_name, api_method_info)
 end
 
 def api_method_response_class_content(api_method_name, operation)
-  responses = operation.responses.response
+  definition = "#{INDENT * 2}# Successful response from calling ##{api_method_name}.\n" \
+               "#{INDENT * 2}class #{"#{api_method_name}_response".camelize} < PaystackGateway::Response"
 
-  definition = "#{INDENT * 2}# Successful response from calling ##{api_method_name}.\n"
-  definition += "#{INDENT * 2}class #{"#{api_method_name}_response".camelize} < PaystackGateway::Response"
-
-  if (success_response = responses[responses.keys.find { _1.match?(/\A2..\z/) }]) &&
-     (required_data_keys = success_response.content['application/json'].schema.properties['data']&.required)
-
-    required_data_keys -= %w[status message data meta]
-    if required_data_keys.length > 3
-      definition += "\n#{INDENT * 3}delegate :#{required_data_keys.shift},"
-
-      while (line_key = required_data_keys.shift).present?
-        definition += "\n#{INDENT * 3}#{' ' * 'delegate'.length} :#{line_key},"
-      end
-      definition += ' to: :data'
-    else
-      definition += "\n#{INDENT * 3}delegate #{required_data_keys.map { |key| ":#{key}" }.join(', ')}, to: :data"
-    end
-
-    "#{definition}\n#{INDENT * 2}end"
+  if (delegate_content = api_method_response_class_delegate_content(operation))
+    "#{definition}#{delegate_content}\n#{INDENT * 2}end"
   else
     "#{definition}; end"
   end
 end
 
+def api_method_response_class_delegate_content(operation)
+  responses = operation.responses.response
+  success_response = responses[responses.keys.find { _1.match?(/\A2..\z/) }]
+  return if !success_response
+
+  required_data_keys = success_response.content['application/json'].schema.properties['data']&.required || []
+
+  required_data_keys -= TOP_LEVEL_RESPONSE_KEYS
+  return if required_data_keys.none?
+
+  if required_data_keys.length > 3
+    definition = "\n#{INDENT * 3}delegate :#{required_data_keys.shift},"
+
+    while (line_key = required_data_keys.shift).present?
+      definition += "\n#{INDENT * 3}#{' ' * 'delegate'.length} :#{line_key},"
+    end
+
+    "#{definition} to: :data"
+  else
+    "\n#{INDENT * 3}delegate #{required_data_keys.map { |key| ":#{key}" }.join(', ')}, to: :data"
+  end
+end
+
 def api_method_error_class_content(api_method_name)
-  definition = "#{INDENT * 2}# Error response from ##{api_method_name}.\n"
-  definition + "#{INDENT * 2}class #{"#{api_method_name}_error".camelize} < ApiError; end"
+  "#{INDENT * 2}# Error response from ##{api_method_name}.\n" \
+    "#{INDENT * 2}class #{"#{api_method_name}_error".camelize} < ApiError; end"
 end
 
 def api_method_content(api_method_name, operation, http_method, path)
   <<-RUBY
-    #{api_method_definition_docstring(api_method_name, operation, http_method, path)}
+    #{api_method_definition_header_docstring(api_method_name, operation, http_method, path)}
+    #{api_method_definition_params_docstring(operation)}
+    #{api_method_definition_response_docstring(api_method_name)}
     #{api_method_definition_name_and_parameters(api_method_name, operation)}
       use_connection do |connection|
         connection.#{http_method}(
@@ -136,11 +146,15 @@ def api_method_content(api_method_name, operation, http_method, path)
   RUBY
 end
 
-def api_method_definition_docstring(api_method_name, operation, http_method, path)
+def api_method_definition_header_docstring(api_method_name, operation, http_method, path)
   docstring = "# https://paystack.com/docs/api/#{operation.tags.first.parameterize}/##{api_method_name}"
   docstring += "\n#{INDENT * 2}# #{operation.summary}: #{http_method.upcase} #{path}"
   docstring += "\n#{INDENT * 2}# #{operation.description}" if operation.description.present?
-  docstring += "\n#{INDENT * 2}#"
+  docstring
+end
+
+def api_method_definition_params_docstring(operation)
+  docstring = '#'
 
   api_method_parameters(operation).each do |param|
     docstring += "\n#{INDENT * 2}# @param #{param[:name]} [#{param[:type]}]"
@@ -158,6 +172,11 @@ def api_method_definition_docstring(api_method_name, operation, http_method, pat
     end
   end
 
+  docstring
+end
+
+def api_method_definition_response_docstring(api_method_name)
+  docstring = '#'
   docstring += "\n#{INDENT * 2}# @return [#{"#{api_method_name}_response".camelize}] successful response"
   docstring + "\n#{INDENT * 2}# @raise [#{"#{api_method_name}_error".camelize}] if the request fails"
 end
