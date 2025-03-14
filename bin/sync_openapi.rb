@@ -184,7 +184,10 @@ class OpenApiGenerator
       param[:required] ? "#{param[:name]}:" : "#{param[:name]}: nil"
     end
 
-    definition = "api_method def self.#{api_method_name}("
+    definition = "api_method def self.#{api_method_name}"
+    return definition if method_args.none?
+
+    definition += '('
 
     if method_args.length > 5
       while (line_arg = method_args.shift).present?
