@@ -183,7 +183,8 @@ end
 
 def api_method_definition_name_and_parameters(api_method_name, operation)
   method_args = api_method_parameters(operation).map do |param|
-    param[:required] ? "#{param[:name]}:" : "#{param[:name]}: nil"
+    name = param[:name].underscore
+    param[:required] ? "#{name}:" : "#{name}: nil"
   end
 
   definition = "api_method def self.#{api_method_name}"
@@ -219,7 +220,8 @@ def api_method_definition_request_params(operation)
 
   if params.length > 5
     while (line_param = params.shift).present?
-      definition += "\n#{INDENT * 6}#{line_param}:,"
+      definition += "\n#{INDENT * 6}#{line_param}:" \
+                    "#{line_param == line_param.underscore ? nil : " #{line_param.underscore}"},"
     end
 
     definition + "\n#{INDENT * 5}}.compact,"
