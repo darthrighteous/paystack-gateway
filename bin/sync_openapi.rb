@@ -56,9 +56,7 @@ class OpenApiGenerator
       # frozen_string_literal: true
 
       module PaystackGateway
-        # = #{tags_by_name.dig(api_module_name, 'x-product-name')&.chomp}
-        # #{tags_by_name.dig(api_module_name, 'description')&.chomp}
-        # https://paystack.com/docs/api/#{api_module_name.parameterize}
+        #{api_module_docstring(api_module_name)}
         module #{api_module_name}
           include PaystackGateway::RequestModule
 
@@ -66,6 +64,21 @@ class OpenApiGenerator
         end
       end
     RUBY
+  end
+
+  def api_module_docstring(api_module_name)
+    module_info = tags_by_name[api_module_name]
+    return if !module_info
+
+    docstring =
+      if module_info['x-product-name']
+        "# = #{module_info['x-product-name'].squish}"
+      else
+        "# = #{api_module_name.humanize}"
+      end
+
+    docstring += "\n#{INDENT * 1}# #{module_info['description'].squish}" if module_info['description']
+    docstring + "\n#{INDENT * 1}# https://paystack.com/docs/api/#{api_module_name.parameterize}"
   end
 
   def api_method_composition(api_module_name, api_method_info)
@@ -127,26 +140,26 @@ class OpenApiGenerator
   end
 
   def api_method_definition_docstring(operation, http_method, path)
-    definition = "# #{operation.summary}: #{http_method.upcase} #{path}"
-    definition += "\n#{INDENT * 2}# #{operation.description}" if operation.description.present?
+    docstring = "# #{operation.summary}: #{http_method.upcase} #{path}"
+    docstring += "\n#{INDENT * 2}# #{operation.description}" if operation.description.present?
 
     api_method_parameters(operation).each do |param|
-      definition += "\n#{INDENT * 2}# @param #{param[:name]} [#{param[:type]}]"
-      definition += ' (required)' if param[:required]
+      docstring += "\n#{INDENT * 2}# @param #{param[:name]} [#{param[:type]}]"
+      docstring += ' (required)' if param[:required]
 
       if (description = param[:description]&.squish)
-        definition += wrapped_text(description, "\n#{INDENT * 2}##{INDENT * 3} ")
+        docstring += wrapped_text(description, "\n#{INDENT * 2}##{INDENT * 3} ")
       end
 
       next if !(object_properties = param[:object_properties])
 
       object_properties.each do |props|
-        definition += "\n#{INDENT * 2}##{INDENT * 4}@option #{param[:name]} [#{props[:type]}] :#{props[:name]}"
-        definition += wrapped_text(props[:description], "\n#{INDENT * 2}##{INDENT * 7} ")
+        docstring += "\n#{INDENT * 2}##{INDENT * 4}@option #{param[:name]} [#{props[:type]}] :#{props[:name]}"
+        docstring += wrapped_text(props[:description], "\n#{INDENT * 2}##{INDENT * 7} ")
       end
     end
 
-    definition
+    docstring
   end
 
   def wrapped_text(text, prefix = nil)
@@ -321,7 +334,7 @@ class OpenApiGenerator
   end
 
   def tags_by_name
-    @tags_by_name ||= @document.raw_schema['tags'].index_by { _1['name'] }
+    @tags_by_name ||= @document.raw_schema['tags'].index_by { _1['name'].remove(' ') }
   end
 
   def document
