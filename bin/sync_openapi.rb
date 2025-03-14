@@ -128,7 +128,7 @@ class OpenApiGenerator
 
   def api_method_content(api_method_name, operation, http_method, path)
     <<-RUBY
-    #{api_method_definition_docstring(operation, http_method, path)}
+    #{api_method_definition_docstring(api_method_name, operation, http_method, path)}
     #{api_method_definition_name_and_parameters(api_method_name, operation)}
       use_connection do |connection|
         connection.#{http_method}(
@@ -139,7 +139,7 @@ class OpenApiGenerator
     RUBY
   end
 
-  def api_method_definition_docstring(operation, http_method, path)
+  def api_method_definition_docstring(api_method_name, operation, http_method, path)
     docstring = "# #{operation.summary}: #{http_method.upcase} #{path}"
     docstring += "\n#{INDENT * 2}# #{operation.description}" if operation.description.present?
 
@@ -158,6 +158,9 @@ class OpenApiGenerator
         docstring += wrapped_text(props[:description], "\n#{INDENT * 2}##{INDENT * 7} ")
       end
     end
+
+    docstring += "\n#{INDENT * 2}# @return [#{"#{api_method_name}_response".camelize}] successful response"
+    docstring += "\n#{INDENT * 2}# @raise [#{"#{api_method_name}_error".camelize}] if the request fails"
 
     docstring
   end
