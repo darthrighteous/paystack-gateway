@@ -7,15 +7,6 @@ require 'paystack_gateway'
 require 'debug'
 
 class OpenApiGenerator
-  SDK_ROOT = File.expand_path('..', __dir__)
-  LIB_DIR = File.join(SDK_ROOT, 'lib', 'paystack_gateway')
-  OPENAPI_SPEC = File.join(SDK_ROOT, 'openapi', 'base', 'paystack.yaml')
-  INDENT = '  '
-
-  def initialize
-    @document = OpenAPIParser.parse(YAML.load_file(OPENAPI_SPEC), strict_reference_validation: true)
-  end
-
   def generate
     api_methods_by_api_module_name.each do |api_module_name, api_methods|
       puts "Processing #{api_module_name}"
@@ -32,9 +23,14 @@ class OpenApiGenerator
 
   private
 
+  SDK_ROOT = File.expand_path('..', __dir__)
+  LIB_DIR = File.join(SDK_ROOT, 'lib', 'paystack_gateway')
+  OPENAPI_SPEC = File.join(SDK_ROOT, 'openapi', 'base', 'paystack.yaml')
+  INDENT = '  '
+
   def api_methods_by_api_module_name
     @api_methods_by_api_module_name ||=
-      @document.paths.path.each_with_object({}) do |(path, path_item), paths_by_api_module|
+      document.paths.path.each_with_object({}) do |(path, path_item), paths_by_api_module|
         %w[get post put patch delete].each do |http_method|
           operation = path_item.operation(http_method)
           next if !operation
@@ -46,10 +42,6 @@ class OpenApiGenerator
           paths_by_api_module[api_module_name] << { path:, http_method:, operation: }
         end
       end
-  end
-
-  def existing_api_modules
-    @existing_api_modules ||= PaystackGateway.api_modules.to_set { |api_module| api_module.name.split('::').last }
   end
 
   def create_new_module(api_module_name, api_methods)
@@ -75,10 +67,6 @@ class OpenApiGenerator
         end
       end
     RUBY
-  end
-
-  def tags_by_name
-    @tags_by_name ||= @document.raw_schema['tags'].index_by { _1['name'] }
   end
 
   def api_method_composition(api_module_name, api_method_info)
@@ -239,7 +227,18 @@ class OpenApiGenerator
       .delete_prefix('_')
       .underscore
   end
+
+  def existing_api_modules
+    @existing_api_modules ||= PaystackGateway.api_modules.to_set { |api_module| api_module.name.split('::').last }
+  end
+
+  def tags_by_name
+    @tags_by_name ||= @document.raw_schema['tags'].index_by { _1['name'] }
+  end
+
+  def document
+    @document ||= OpenAPIParser.parse(YAML.load_file(OPENAPI_SPEC), strict_reference_validation: true)
+  end
 end
 
-generator = OpenApiGenerator.new
-generator.generate
+OpenApiGenerator.new.generate
