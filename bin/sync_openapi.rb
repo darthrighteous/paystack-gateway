@@ -2,7 +2,6 @@
 # frozen_string_literal: true
 
 require 'openapi_parser'
-require 'fileutils'
 require 'paystack_gateway'
 require 'debug'
 
