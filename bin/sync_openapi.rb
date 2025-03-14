@@ -83,12 +83,25 @@ class OpenApiGenerator
 
   def api_method_response_class_content(api_method_name, operation)
     responses = operation.responses.response
-    success_response = responses[responses.keys.find { _1.match?(/\A2..\z/) }]
 
     definition = "#{INDENT * 2}# Successful response from calling ##{api_method_name}.\n"
     definition += "#{INDENT * 2}class #{"#{api_method_name}_response".camelize} < PaystackGateway::Response"
 
-    if success_response
+    if (success_response = responses[responses.keys.find { _1.match?(/\A2..\z/) }]) &&
+       (required_data_keys = success_response.content['application/json'].schema.properties['data']&.required)
+
+      required_data_keys -= %w[status message data meta]
+      if required_data_keys.length > 3
+        definition += "\n#{INDENT * 3}delegate :#{required_data_keys.shift},"
+
+        while (line_key = required_data_keys.shift).present?
+          definition += "\n#{INDENT * 3}#{' ' * 'delegate'.length} :#{line_key},"
+        end
+        definition += ' to: :data'
+      else
+        definition += "\n#{INDENT * 3}delegate #{required_data_keys.map { |key| ":#{key}" }.join(', ')}, to: :data"
+      end
+
       "#{definition}\n#{INDENT * 2}end"
     else
       "#{definition}; end"
@@ -102,6 +115,7 @@ class OpenApiGenerator
 
   def api_method_content(api_method_name, operation, http_method, path)
     <<-RUBY
+    #{api_method_definition_docstring(operation, http_method, path)}
     #{api_method_definition_name_and_parameters(api_method_name, operation)}
       use_connection do |connection|
         connection.#{http_method}(
@@ -112,13 +126,47 @@ class OpenApiGenerator
     RUBY
   end
 
-  def api_method_definition_name_and_parameters(api_method_name, operation)
-    api_method_parameters(operation) => { required:, optional: }
+  def api_method_definition_docstring(operation, http_method, path)
+    definition = "# #{operation.summary}: #{http_method.upcase} #{path}"
+    definition += "\n#{INDENT * 2}# #{operation.description}" if operation.description.present?
 
-    method_args = [
-      *required.map { |param| "#{param}:" },
-      *optional.map { |param| "#{param}: nil" },
-    ]
+    api_method_parameters(operation).each do |param|
+      definition += "\n#{INDENT * 2}# @param #{param[:name]} [#{param[:type]}]"
+      definition += ' (required)' if param[:required]
+
+      if (description = param[:description]&.squish)
+        definition += wrapped_text(description, "\n#{INDENT * 2}##{INDENT * 3} ")
+      end
+
+      next if !(object_properties = param[:object_properties])
+
+      object_properties.each do |props|
+        definition += "\n#{INDENT * 2}##{INDENT * 4}@option #{param[:name]} [#{props[:type]}] :#{props[:name]}"
+        definition += wrapped_text(props[:description], "\n#{INDENT * 2}##{INDENT * 7} ")
+      end
+    end
+
+    definition
+  end
+
+  def wrapped_text(text, prefix = nil)
+    wrapped = ''
+    text_words = text.split
+
+    until text_words.none?
+      line = ''
+      line += " #{text_words.shift}" until text_words.none? || line.length >= 80
+
+      wrapped += "#{prefix}#{line}"
+    end
+
+    wrapped
+  end
+
+  def api_method_definition_name_and_parameters(api_method_name, operation)
+    method_args = api_method_parameters(operation).map do |param|
+      param[:required] ? "#{param[:name]}:" : "#{param[:name]}: nil"
+    end
 
     definition = "api_method def self.#{api_method_name}("
 
@@ -141,10 +189,9 @@ class OpenApiGenerator
   end
 
   def api_method_definition_request_params(operation)
-    api_method_path_and_query_parameters(operation) => { query_params: }
-    api_method_request_body_parameters(operation) => { required:, optional: }
-    params = required + optional + query_params
-
+    params = api_method_parameters(operation)
+               .reject { |param| param[:in] == 'path' }
+               .map { |param| param[:name] }
     return if params.none?
 
     definition = "\n#{INDENT * 5}{"
@@ -161,53 +208,95 @@ class OpenApiGenerator
   end
 
   def api_method_parameters(operation)
-    path_and_query_params = api_method_path_and_query_parameters(operation)
-    body_params = api_method_request_body_parameters(operation)
-
-    required = path_and_query_params[:path_params] + body_params[:required]
-    optional = body_params[:optional] + path_and_query_params[:query_params]
-
-    { required:, optional: }
+    @api_method_parameters ||= {}
+    @api_method_parameters[operation] ||= [
+      *api_method_path_and_query_parameters(operation),
+      *api_method_request_body_parameters(operation),
+    ].sort_by { |param| param[:required] ? 0 : 1 }
   end
 
   def api_method_path_and_query_parameters(operation)
-    path_params = []
-    query_params = []
+    return [] if !operation.parameters
 
-    path_params, query_params = operation.parameters.partition { _1.in == 'path' } if operation.parameters
-
-    {
-      path_params: path_params.map(&:name),
-      query_params: query_params.map(&:name),
-    }
+    operation.parameters.map do |param|
+      {
+        name: param.name,
+        in: param.in,
+        required: param.in == 'path',
+        description: param.description,
+        type: schema_type(param.schema),
+      }
+    end
   end
 
   def api_method_request_body_parameters(operation)
-    required = []
-    optional = []
+    return [] if !operation.request_body
 
-    if operation.request_body
-      schema = operation.request_body.content['application/json'].schema
+    schema = operation.request_body.content['application/json'].schema
+    if schema.type == 'array'
+      schema_array_properties(schema)
+    else
+      schema_object_properties(schema)
+    end
+  end
 
-      if schema.type == 'array'
-        schema.items.properties.map { |name, _| required << [name, schema.items.properties[name]] }
-      else
-        schema_data =
-          if schema.all_of.present?
-            [schema.all_of.map(&:properties).flatten, schema.all_of.map(&:required).flatten]
-          else
-            [schema.properties, schema.required]
-          end
-        schema_data => [schema_properties, schema_required]
+  def schema_array_properties(schema)
+    schema.items.properties.map do |name, p_schema|
+      {
+        name:,
+        in: 'body',
+        required: true,
+        description: schema_description(p_schema),
+        type: "Array<#{schema_type(p_schema.items)}>",
+        object_properties: schema_object_properties(p_schema.items),
+      }
+    end
+  end
 
-        required, optional = schema_properties.partition { |name, _| schema_required&.include?(name) }
-      end
+  def schema_object_properties(schema)
+    if schema.all_of.present?
+      schema_properties = schema.all_of.map(&:properties).reduce(&:merge)
+      schema_required = schema.all_of.flat_map(&:required).compact.presence
+    else
+      schema_properties = schema.properties
+      schema_required = schema.required
     end
 
-    {
-      required: required.map(&:first),
-      optional: optional.map(&:first),
-    }
+    schema_properties&.map do |name, p_schema|
+      {
+        name:,
+        in: 'body',
+        required: schema_required ? schema_required.include?(name) : true,
+        description: schema_description(p_schema),
+        type: schema_type(p_schema),
+        object_properties: schema_object_properties(p_schema),
+      }
+    end
+  end
+
+  def schema_description(schema)
+    schema.description || schema.items&.description
+  end
+
+  def schema_type(schema)
+    case schema.type
+    when 'array'
+      "Array<#{schema_type(schema.items)}>"
+    when 'string'
+      if schema.format == 'date-time'
+        'Time'
+      elsif schema.enum
+        schema.enum.map { |v| "\"#{v}\"" }.join(', ')
+      else
+        'String'
+      end
+    when 'object'
+      'Hash'
+    when 'integer', 'boolean', 'number'
+      schema.type.capitalize
+    else
+      raise "Unhandled schema type: #{schema.type}"
+    end
   end
 
   def api_method_name(api_module_name, operation)

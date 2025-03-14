@@ -6,6 +6,8 @@ AllCops:
   TargetRubyVersion: 3.3
   NewCops: enable
 
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented_relative_to_receiver
 Metrics/AbcSize:
   Max: 25
 Metrics/MethodLength:
