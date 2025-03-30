@@ -3,7 +3,9 @@
 module PaystackGateway
   # The Dedicated Virtual Account API enables Nigerian merchants to manage unique
   # payment accounts of their customers.
-  # https://paystack.com/docs/api/dedicated-virtual-account/
+  # https://paystack.com/docs/api/dedicated-virtual-account
+  #
+  # @deprecated Use PaystackGateway::DedicatedVirtualAccount instead.
   module DedicatedVirtualAccounts
     include PaystackGateway::RequestModule
 

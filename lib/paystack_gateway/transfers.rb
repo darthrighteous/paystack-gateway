@@ -2,6 +2,8 @@
 
 module PaystackGateway
   # Automate sending money https://paystack.com/docs/api/#transfer
+  #
+  # @deprecated Use PaystackGateway::Transfer instead.
   module Transfers
     include PaystackGateway::RequestModule
 

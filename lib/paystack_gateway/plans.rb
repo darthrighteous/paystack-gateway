@@ -3,6 +3,8 @@
 module PaystackGateway
   # Create and manage installment payment options
   # https://paystack.com/docs/api/plan/#create
+  #
+  # @deprecated Use PaystackGateway::Plan instead.
   module Plans
     include PaystackGateway::RequestModule
 

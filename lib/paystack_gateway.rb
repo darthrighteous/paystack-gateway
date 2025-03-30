@@ -18,6 +18,8 @@ require 'paystack_gateway/transactions'
 require 'paystack_gateway/transfer_recipients'
 require 'paystack_gateway/transfers'
 require 'paystack_gateway/verification'
+
+# Webhooks
 require 'paystack_gateway/webhooks'
 
 # API Modules

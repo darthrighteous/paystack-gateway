@@ -2,6 +2,8 @@
 
 module PaystackGateway
   # Create and manage customers https://paystack.com/docs/api/customer/
+  #
+  # @deprecated Use PaystackGateway::Customer instead.
   module Customers
     include PaystackGateway::RequestModule
 

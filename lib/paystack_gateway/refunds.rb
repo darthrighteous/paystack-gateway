@@ -3,6 +3,8 @@
 module PaystackGateway
   # Create and manage transaction refunds.
   # https://paystack.com/docs/api/refund
+  #
+  # @deprecated Use PaystackGateway::Refund instead.
   module Refunds
     include PaystackGateway::RequestModule
 
