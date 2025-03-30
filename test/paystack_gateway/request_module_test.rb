@@ -58,20 +58,23 @@ class RequestModuleTest < Minitest::Test
   def test_api_methods_are_decorated_with_error_handling
     logger_error_mock = Minitest::Mock.new
     logger_error_mock.expect(:call, nil, [/RequestModuleTest::MockRequestModule#mock_api_error_method:.*404/])
-    logger_error_mock.expect(
+
+    logger_debug_mock = Minitest::Mock.new
+    logger_debug_mock.expect(
       :call,
       nil,
-      [/"request_method":.*"request_url":.*"request_headers":.*"response_headers":.*"response_body":/m],
-    )
+    ) { [/"request_method":.*"request_url":.*"request_headers":.*"response_headers":.*"response_body":/m] }
 
     PaystackGateway.logger.stub(:error, logger_error_mock) do
-      error = assert_raises MockRequestModule::MockApiErrorMethodError do
-        VCR.use_cassette 'mock_failure' do
-          MockRequestModule.mock_api_error_method
+      PaystackGateway.logger.stub(:debug, logger_debug_mock) do
+        error = assert_raises MockRequestModule::MockApiErrorMethodError do
+          VCR.use_cassette 'mock_failure' do
+            MockRequestModule.mock_api_error_method
+          end
         end
-      end
 
-      assert_match(/Paystack error:.*server.*responded.*404.*status:.*response:/, error.message)
+        assert_match(/Paystack error:.*server.*responded.*404.*status:.*response:/, error.message)
+      end
     end
 
     logger_error_mock.verify

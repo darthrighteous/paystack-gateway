@@ -10,7 +10,7 @@ module PaystackGateway
     attr_accessor :secret_key, :logger, :logging_options, :log_filter, :use_extensions
 
     def initialize
-      @logger = Logger.new($stdout)
+      @logger = Logger.new($stdout, level: :info)
       @log_filter = lambda(&:dup)
       @use_extensions = true
     end
