@@ -26,19 +26,19 @@ class RequestModuleTest < Minitest::Test
   end
 
   def test_api_methods_make_requests_and_return_responses
-    logger_info_mock = Minitest::Mock.new
-    logger_info_mock.expect(:call, nil, ['request'])
-    logger_info_mock.expect(:call, nil, ['response'])
-
-    PaystackGateway.logger.stub(:info, logger_info_mock) do
+    assert_messages_received(
+      PaystackGateway.logger, :info,
+      [
+        { block_matcher: ->(&blk) { blk.call.match?(/request/) } },
+        { block_matcher: ->(&blk) { blk.call.match?(/response/) }},
+      ],
+    ) do
       VCR.use_cassette 'miscellaneous/country_success' do
         response = MockRequestModule.mock_api_method
 
         assert_instance_of MockRequestModule::MockApiMethodResponse, response
       end
     end
-
-    logger_info_mock.verify
   end
 
   def test_api_methods_are_decorated_with_current_attributes
