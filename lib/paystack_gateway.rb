@@ -49,6 +49,13 @@ require 'paystack_gateway/transaction'
 require 'paystack_gateway/transfer'
 require 'paystack_gateway/transfer_recipient'
 
+# Extensions
+require 'paystack_gateway/extensions/customer_extensions'
+require 'paystack_gateway/extensions/plan_extensions'
+require 'paystack_gateway/extensions/refund_extensions'
+require 'paystack_gateway/extensions/transaction_extensions'
+require 'paystack_gateway/extensions/transfer_extensions'
+
 # = PaystackGateway
 module PaystackGateway
   class << self
