@@ -135,10 +135,11 @@ module PaystackGateway
     # https://paystack.com/docs/api/customer/#fetch
     # Fetch Customer: GET /customer/{code}
     #
+    # @param code [String] (required)
     #
     # @return [FetchResponse] successful response
     # @raise [FetchError] if the request fails
-    api_method def self.fetch
+    api_method def self.fetch(code:)
       use_connection do |connection|
         connection.get(
           "/customer/#{code}",
