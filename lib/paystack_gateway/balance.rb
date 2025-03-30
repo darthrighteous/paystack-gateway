@@ -53,7 +53,7 @@ module PaystackGateway
       use_connection do |connection|
         connection.get(
           '/balance/ledger',
-          { perPage:, page:, from:, to: }.compact,
+          { perPage: per_page, page:, from:, to: }.compact,
         )
       end
     end

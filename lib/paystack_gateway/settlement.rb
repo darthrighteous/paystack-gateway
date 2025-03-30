@@ -26,7 +26,7 @@ module PaystackGateway
       use_connection do |connection|
         connection.get(
           '/settlement',
-          { perPage:, page: }.compact,
+          { perPage: per_page, page: }.compact,
         )
       end
     end

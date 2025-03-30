@@ -52,7 +52,7 @@ module PaystackGateway
       use_connection do |connection|
         connection.post(
           '/apple-pay/domain',
-          { domainName: }.compact,
+          { domainName: domain_name }.compact,
         )
       end
     end
@@ -76,7 +76,7 @@ module PaystackGateway
       use_connection do |connection|
         connection.delete(
           '/apple-pay/domain',
-          { domainName: }.compact,
+          { domainName: domain_name }.compact,
         )
       end
     end

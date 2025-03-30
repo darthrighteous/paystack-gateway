@@ -27,7 +27,7 @@ module PaystackGateway
       use_connection do |connection|
         connection.get(
           '/storefront',
-          { perPage:, page:, status: }.compact,
+          { perPage: per_page, page:, status: }.compact,
         )
       end
     end

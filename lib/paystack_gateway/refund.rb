@@ -32,7 +32,7 @@ module PaystackGateway
       use_connection do |connection|
         connection.get(
           '/refund',
-          { perPage:, page:, from:, to: }.compact,
+          { perPage: per_page, page:, from:, to: }.compact,
         )
       end
     end

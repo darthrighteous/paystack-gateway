@@ -33,7 +33,7 @@ module PaystackGateway
       use_connection do |connection|
         connection.get(
           '/transfer',
-          { perPage:, page:, status:, from:, to: }.compact,
+          { perPage: per_page, page:, status:, from:, to: }.compact,
         )
       end
     end
@@ -262,7 +262,7 @@ module PaystackGateway
       use_connection do |connection|
         connection.get(
           '/transfer/export',
-          { perPage:, page:, status:, from:, to: }.compact,
+          { perPage: per_page, page:, status:, from:, to: }.compact,
         )
       end
     end

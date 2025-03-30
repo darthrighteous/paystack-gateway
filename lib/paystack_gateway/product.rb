@@ -31,7 +31,7 @@ module PaystackGateway
       use_connection do |connection|
         connection.get(
           '/product',
-          { perPage:, page:, active:, from:, to: }.compact,
+          { perPage: per_page, page:, active:, from:, to: }.compact,
         )
       end
     end
