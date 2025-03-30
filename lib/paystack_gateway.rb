@@ -6,9 +6,9 @@ require 'paystack_gateway/api_error'
 require 'paystack_gateway/current'
 require 'paystack_gateway/request_module'
 require 'paystack_gateway/response'
-require 'paystack_gateway/transaction_response'
 
 # Old Implementations, will be removed in a future version.
+require 'paystack_gateway/transaction_response'
 require 'paystack_gateway/customers'
 require 'paystack_gateway/dedicated_virtual_accounts'
 require 'paystack_gateway/plans'
@@ -52,13 +52,6 @@ require 'paystack_gateway/transfer_recipient'
 # = PaystackGateway
 module PaystackGateway
   class << self
-    attr_writer :config
-
-    delegate :secret_key, :logger, :logging_options, :log_filter, to: :config
-
-    def config = @config ||= Configuration.new
-    def configure = yield(config)
-
     def api_modules
       constants.filter_map do |const_name|
         const = const_get(const_name)

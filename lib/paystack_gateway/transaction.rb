@@ -8,15 +8,15 @@ module PaystackGateway
   module Transaction
     include PaystackGateway::RequestModule
 
-    # Successful response from calling #initialize.
-    class InitializeResponse < PaystackGateway::Response
+    # Successful response from calling #initialize_transaction.
+    class InitializeTransactionResponse < PaystackGateway::Response
       delegate :authorization_url, :access_code, :reference, to: :data
     end
 
-    # Error response from #initialize.
-    class InitializeError < ApiError; end
+    # Error response from #initialize_transaction.
+    class InitializeTransactionError < ApiError; end
 
-    # https://paystack.com/docs/api/transaction/#initialize
+    # https://paystack.com/docs/api/transaction/#initialize_transaction
     # Initialize Transaction: POST /transaction/initialize
     # Create a new transaction
     #
@@ -70,9 +70,9 @@ module PaystackGateway
     # @param metadata [String]
     #        Stringified JSON object of custom data
     #
-    # @return [InitializeResponse] successful response
-    # @raise [InitializeError] if the request fails
-    api_method def self.initialize(
+    # @return [InitializeTransactionResponse] successful response
+    # @raise [InitializeTransactionError] if the request fails
+    api_method def self.initialize_transaction(
       email:,
       amount:,
       currency: nil,

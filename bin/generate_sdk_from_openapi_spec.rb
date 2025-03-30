@@ -235,20 +235,28 @@ def schema_description(schema)
 end
 
 def api_method_name(api_module_name, operation)
-  operation
-    .operation_id
-    .delete_prefix(
-      case api_module_name.to_sym
-      when :DedicatedVirtualAccount
-        'dedicatedAccount'
-      when :TransferRecipient
-        'transferrecipient'
-      else
-        api_module_name.camelize(:lower)
-      end,
-    )
-    .delete_prefix('_')
-    .underscore
+  name = operation
+           .operation_id
+           .delete_prefix(
+             case api_module_name.to_sym
+             when :DedicatedVirtualAccount
+               'dedicatedAccount'
+             when :TransferRecipient
+               'transferrecipient'
+             else
+               api_module_name.camelize(:lower)
+             end,
+           )
+           .delete_prefix('_')
+           .underscore
+
+  # initialize is a reserved word in Ruby
+  case [api_module_name, name]
+  when %w[Transaction initialize]
+    'initialize_transaction'
+  else
+    name
+  end
 end
 
 def wrapped_text(text, prefix = nil)
