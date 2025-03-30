@@ -21,9 +21,10 @@ To use the PaystackGateway gem, you need to configure it with your Paystack secr
 
 The configuration options are
 - `secret_key`: Your paystack api key used to authorize requests
-- `logger`: Your ruby Logger. Default is Logger.new($stdout)
+- `logger`: Your ruby Logger. Default is `Logger.new($stdout)`
 - `logging_options`:  Options passed to [Faraday logger middleware](https://github.com/lostisland/faraday/blob/main/lib/faraday/response/logger.rb). Default is `{ headers: false }`
 - `log_filter`: Filter used when logging headers and body.
+- `use_extensions`: Enable extension modules that add useful helper methods to response and error objects. Default is `true`.
 
 ```ruby
 # config/initializers/paystack_gateway.rb
@@ -41,30 +42,78 @@ end
 
 ## Usage
 
-### Calling API endpoints
-Once configured, you can start using the various API modules and methods provided by the gem. They are designed to mirror how the api methods are grouped and listed on the [Paystack API](https://paystack.com/docs/api/).
+Once configured, you can begin utilising the various API modules and methods provided by the gem.
+```irb
+:001 > r = PaystackGateway::Customer.fetch(code: 'test@example.com')
+  I, [2025-03-30T19:53:06.951015 #29623]  INFO -- : request: GET https://api.paystack.co/customer/test@example.com
+  I, [2025-03-30T19:53:07.486206 #29623]  INFO -- : response: Status 200
+  =>
+  {:status=>true,
+  ...
+:002 > r.class
+ => PaystackGateway::Customer::FetchResponse
+:003 > r.customer_code
+  => "CUS_xsrozmbt8g1oear"
+```
 
-Here's an example creating a customer using the [/customer/create endpoint](https://paystack.com/docs/api/customer/#create).
+### API Organisation
+
+The code is generated directly from [Paystack's OpenAPI specification](https://github.com/PaystackOSS/openapi), ensuring that it mirrors Paystack’s API organisation accurately. Refer to the API documentation for detailed schemas and available options for each endpoint.
+
+- **API Modules**: Each API tag in the Paystack documentation becomes a module under `PaystackGateway`. For example, the Transaction API is accessible via `PaystackGateway::Transaction`.
+- **API Methods**: Each operation within a tag is implemented as a method in the corresponding module. For instance, to verify a transaction, you call `PaystackGateway::Transaction.verify`.
+
+### Parameters
+
+All API parameters are implemented as method arguments:
+
+- **Path parameters**: Required parameters in the URL path (e.g., `reference` in `/transaction/verify/{reference}`)
+- **Query parameters**: Optional parameters for GET requests (e.g., `from`, `to` in `/transaction/totals`)
+- **Request body parameters**: Parameters sent in the request body for POST/PUT requests
+
+Required parameters are clearly marked in the method signatures, while optional parameters typically default to `nil`.
+
+### Responses
+
+Each API method returns a specific response object. For example, when you call `PaystackGateway::Transaction.verify`, you will receive either:
+
+- `PaystackGateway::Transaction::VerifyResponse`, which indicates a successful call.
+- `PaystackGateway::Transaction::VerifyError`, which is raised if the call fails.
+
+Paystack responses usually include the main payload nested in the `data` field of the response body. To simplify access, the response objects automatically delegate known attributes from this field, allowing you to reference them directly.
+
+For instance, here’s how you can fetch a customer using the [/customer/{code} endpoint](https://paystack.com/docs/api/customer/#fetch):
+
 
 ```ruby
-response = PaystackGateway::Customers.create_customer(
-  email: 'test@example.com',
-  first_name: 'Test',
-  last_name: 'User',
-)
+response = PaystackGateway::Customer.fetch(code: 'CUS_xsrozmbt8g1oear')
 
+# An example of the original response body:
+# {:status=>true,
+#  :message=>"Customer retrieved",
+#  :data=>
+#   {"email"=>"test@example.com",
+#    "phone"=>"+2348011111111",
+#    "customer_code"=>"CUS_xsrozmbt8g1oear",
+#    "id"=>203316808,
+#    ...
+
+# You can access the attributes directly:
 response.id # => 203316808
 response.customer_code # => "CUS_xsrozmbt8g1oear"
+
+# Alternatively, you can access them via the data field:
+response.data.id # => 203316808
+response.data.customer_code # => "CUS_xsrozmbt8g1oear"
 ```
 
 ### Error Handling
-Whenever a network error occurs or the called endpoint responds with an error response, a `PaystackGateway::ApiError`(or a subclass of it) is raised that can be handled in your calling code.
 
-Here's an example initializing a transaction using the [/transaction/initialize endpoint](https://paystack.com/docs/api/transaction/#initialize)
+Whenever a network error occurs or the called endpoint returns an error response, a `PaystackGateway::ApiError` (or one of its subclasses) is raised, which you can handle in your code. For example, initialising a transaction using the [/transaction/initialize endpoint](https://paystack.com/docs/api/transaction/#initialize) might be done as follows:
 
 ```ruby
 begin
-  response = PaystackGateway::Transactions.initialize_transaction(
+  response = PaystackGateway::Transaction.initialize_transaction(
     email: 'test@example.com',
     amount: 1000,
     reference: 'test_reference',
@@ -87,91 +136,21 @@ Some endpoints currently make use of caching:
 - Miscellaneous#list_banks
 - Verifications#resolve_account_number
 
-Caching works using an [ActiveSupport::Cache::FileStore](https://api.rubyonrails.org/classes/ActiveSupport/Cache/FileStore.html) cache. The default caching period is 7 days and the cache data is stored on the file system at `ENV['TMPDIR']` or `/tmp/cache`. 
+Caching works using an [ActiveSupport::Cache::FileStore](https://api.rubyonrails.org/classes/ActiveSupport/Cache/FileStore.html) cache. The default caching period is 7 days and the cache data is stored on the file system at `ENV['TMPDIR']` or `/tmp/cache`.
 
+### Extensions
 
-## API Modules and Methods
-> Refer to the [Paystack API documentation](https://paystack.com/docs/api) for details on all the available endpoints and their usage.
+PaystackGateway includes extension modules that offer additional helper methods on both response and error objects. These modules are enabled by default, so you can immediately benefit from simpler data access and enhanced error handling.
 
-### Implemented Modules and Methods
+If you prefer to opt out of these enhancements, you can update your configuration as follows:
 
-Below is a complete list of the API modules and methods that are currently implemented.
+```ruby
+PaystackGateway.configure do |config|
+  config.use_extensions = false
+end
+```
 
-I invite you to collaborate on this project! If you need to use any of the unimplemented API methods or modules, or if you want to make modifications to the defaults or the level of configuration available in the currently implemented API methods, please feel free to raise a pull request (PR). See [Contributing](#contributing) and [Code of Conduct](#code-of-conduct) below
-
-- [x] [Transactions](https://paystack.com/docs/api/transaction/)
-  - [x] [Initialize Transaction](https://paystack.com/docs/api/transaction/#initialize)
-  - [x] [Verify Transaction](https://paystack.com/docs/api/transaction/#verify)
-  - [ ] [List Transactions](https://paystack.com/docs/api/transaction/#list)
-  - [ ] [Fetch Transaction](https://paystack.com/docs/api/transaction/#fetch)
-  - [x] [Charge Authorization](https://paystack.com/docs/api/transaction/#charge-authorization)
-  - [ ] [View Transaction Timeline](https://paystack.com/docs/api/transaction/#view-timeline)
-  - [ ] [Transaction Totals](https://paystack.com/docs/api/transaction/#totals)
-  - [ ] [Export Transactions](https://paystack.com/docs/api/transaction/#export)
-  - [ ] [Partial Debit](https://paystack.com/docs/api/transaction/#partial-debit)
-
-- [ ] [Customers](https://paystack.com/docs/api/customer/)
-  - [x] [Create Customer](https://paystack.com/docs/api/customer/#create)
-  - [ ] [List Customers](https://paystack.com/docs/api/customer/#list)
-  - [x] [Fetch Customer](https://paystack.com/docs/api/customer/#fetch)
-  - [ ] [Update Customer](https://paystack.com/docs/api/customer/#update)
-  - [ ] [Validate Customer](https://paystack.com/docs/api/customer/#validate)
-  - [ ] [Whitelist/Blacklist Customer](https://paystack.com/docs/api/customer/#whitelist-blacklist)
-  - [ ] [Deactivate Authorization](https://paystack.com/docs/api/customer/#deactivate-authorization)
-
-- [x] [Dedicated Virtual Accounts](https://paystack.com/docs/api/dedicated-virtual-account/)
-  - [x] [Create Dedicated Virtual Account](https://paystack.com/docs/api/dedicated-virtual-account/#create)
-  - [x] [Assign Dedicated Virtual Account](https://paystack.com/docs/api/dedicated-virtual-account/#assign)
-  - [ ] [List Dedicated Accounts](https://paystack.com/docs/api/dedicated-virtual-account/#list)
-  - [ ] [Fetch Dedicated Account](https://paystack.com/docs/api/dedicated-virtual-account/#fetch)
-  - [x] [Requery Dedicated Account](https://paystack.com/docs/api/dedicated-virtual-account/#requery)
-  - [ ] [Deactivate Dedicated Account](https://paystack.com/docs/api/dedicated-virtual-account/#deactivate)
-  - [x] [Split Dedicated Account Transaction](https://paystack.com/docs/api/dedicated-virtual-account/#add-split)
-  - [ ] [Remove Split from Dedicated Account](https://paystack.com/docs/api/dedicated-virtual-account/#remove-split)
-  - [ ] [Fetch Bank Providers](https://paystack.com/docs/api/dedicated-virtual-account/#providers)
-
-- [ ] [Subaccounts](https://paystack.com/docs/api/subaccount/)
-  - [x] [Create Subaccount](https://paystack.com/docs/api/subaccount/#create)
-  - [ ] [List Subaccounts](https://paystack.com/docs/api/subaccount/#list)
-  - [ ] [Fetch Subaccount](https://paystack.com/docs/api/subaccount/#fetch)
-  - [x] [Update Subaccount](https://paystack.com/docs/api/subaccount/#update)
-
-- [x] [Plans](https://paystack.com/docs/api/plan/)
-  - [x] [Create Plan](https://paystack.com/docs/api/plan/#create)
-  - [x] [List Plans](https://paystack.com/docs/api/plan/#list)
-  - [x] [Fetch Plan](https://paystack.com/docs/api/plan/#fetch)
-  - [x] [Update Plan](https://paystack.com/docs/api/plan/#update)
-
-- [x] [Transfer Recipients](https://paystack.com/docs/api/transfer-recipient/)
-  - [x] [Create Transfer Recipient](https://paystack.com/docs/api/transfer-recipient/#create)
-  - [ ] [Bulk Create Transfer Recipient](https://paystack.com/docs/api/transfer-recipient/#bulk)
-  - [ ] [List Transfer Recipients](https://paystack.com/docs/api/transfer-recipient/#list)
-  - [ ] [Fetch Transfer Recipient](https://paystack.com/docs/api/transfer-recipient/#fetch)
-  - [ ] [Update Transfer Recipient](https://paystack.com/docs/api/transfer-recipient/#update)
-  - [ ] [Delete Transfer Recipient](https://paystack.com/docs/api/transfer-recipient/#delete)
-
-- [x] [Transfers](https://paystack.com/docs/api/transfer/)
-  - [x] [Initiate Transfer](https://paystack.com/docs/api/transfer/#initiate)
-  - [ ] [Finalize Transfer](https://paystack.com/docs/api/transfer/#finalize)
-  - [ ] [Initiate Bulk Transfer](https://paystack.com/docs/api/transfer/#bulk)
-  - [ ] [List Transfers](https://paystack.com/docs/api/transfer/#list)
-  - [ ] [Fetch Transfer](https://paystack.com/docs/api/transfer/#fetch)
-  - [x] [Verify Transfer](https://paystack.com/docs/api/transfer/#verify)
-
-- [x] [Refunds](https://paystack.com/docs/api/refund/)
-  - [x] [Create Refund](https://paystack.com/docs/api/refund/#create)
-  - [x] [List Refunds](https://paystack.com/docs/api/refund/#list)
-  - [x] [Fetch Refund](https://paystack.com/docs/api/refund/#fetch)
-
-- [x] [Verification](https://paystack.com/docs/api/verification/)
-  - [x] [Resolve Account Number](https://paystack.com/docs/api/verification/#resolve-account)
-  - [ ] [Validate Account](https://paystack.com/docs/api/verification/#validate-account)
-  - [ ] [Resolve Card BIN](https://paystack.com/docs/api/verification/#resolve-card)
-
-- [x] [Miscellaneous](https://paystack.com/docs/api/miscellaneous/)
-  - [x] [List Banks](https://paystack.com/docs/api/miscellaneous/#bank)
-  - [ ] [List/Search Countries](https://paystack.com/docs/api/miscellaneous/#country)
-  - [ ] [List States (AVS)](https://paystack.com/docs/api/miscellaneous/#avs-states)
+For additional details on the available extensions and helper methods, please refer directly to the source code in the [extensions directory](https://github.com/darthrighteous/paystack-gateway/tree/main/lib/paystack_gateway/extensions).
 
 
 ## Development
@@ -184,7 +163,7 @@ I invite you to collaborate on this project! If you need to use any of the unimp
 
 ### Setting up
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
 ### Running the tests and linter
 
@@ -193,9 +172,9 @@ Minitest is used for unit tests. Rubocop is used to enforce the ruby style.
 To run the complete set of tests and linter run the following:
 
 ```bash
-$ bundle install
-$ bundle exec rake test
-$ bundle exec rubocop
+$ bin/setup
+$ bin/test
+$ bin/lint
 ```
 
 ## Contributing

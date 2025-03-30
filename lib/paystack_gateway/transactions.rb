@@ -2,6 +2,8 @@
 
 module PaystackGateway
   # Create and manage payments https://paystack.com/docs/api/#transaction
+  #
+  # @deprecated Use PaystackGateway::Transaction instead.
   module Transactions
     include PaystackGateway::RequestModule
 

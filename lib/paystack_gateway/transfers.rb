@@ -2,6 +2,8 @@
 
 module PaystackGateway
   # Automate sending money https://paystack.com/docs/api/#transfer
+  #
+  # @deprecated Use PaystackGateway::Transfer instead.
   module Transfers
     include PaystackGateway::RequestModule
 
@@ -9,7 +11,7 @@ module PaystackGateway
     class InitiateTransferResponse < PaystackGateway::Response
       include TransactionResponse
 
-      delegate :transfer_code, :id, :transferred_at, to: :data
+      delegate :transfer_code, :transferred_at, to: :data
 
       def transaction_completed_at
         transferred_at || super

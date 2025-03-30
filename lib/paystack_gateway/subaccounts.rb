@@ -2,6 +2,8 @@
 
 module PaystackGateway
   # Create and manage subaccounts https://paystack.com/docs/api/subaccount/
+  #
+  # @deprecated Use PaystackGateway::Subaccount instead.
   module Subaccounts
     include PaystackGateway::RequestModule
 

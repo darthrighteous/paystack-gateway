@@ -2,6 +2,8 @@
 
 module PaystackGateway
   # Perform KYC processes https://paystack.com/docs/api/#verification
+  #
+  # @deprecated Use PaystackGateway::Bank instead.
   module Verification
     include PaystackGateway::RequestModule
 

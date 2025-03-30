@@ -3,6 +3,8 @@
 module PaystackGateway
   # Create and manage beneficiaries that you send money to
   # https://paystack.com/docs/api/#transfer-recipient
+  #
+  # @deprecated Use PaystackGateway::TransferRecipient instead.
   module TransferRecipients
     include PaystackGateway::RequestModule
 
