@@ -26,17 +26,17 @@ module Minitest
     #   assert_message(SomeService, :some_method, *args, **kwargs) do
     #     SomeService.some_method(*args, **kwargs)
     #   end
-    def assert_message_received(receiver, message, return_val = nil, args = [], **, &)
+    def assert_message_received(receiver, message, args = [], return_val: nil, block_matcher: nil, **, &)
       mock = Minitest::Mock.new
-      mock.expect(:call, return_val, args, **)
+      mock.expect(:call, return_val, args, **, &block_matcher)
 
       receiver.stub(message, mock, &)
 
-      begin
-        assert_mock mock
-      rescue MockExpectationError
-        raise Minitest::Assertion, "Expected #{receiver} to receive #{message} with #{args.inspect}, but it did not."
-      end
+      assert_mock mock
+    rescue MockExpectationError => e
+      raise Minitest::Assertion, "Expected #{receiver} to receive #{message} " \
+                                 "with #{args.inspect}, but it did not.\n" \
+                                 "Instead, #{e.message}"
     end
   end
 end

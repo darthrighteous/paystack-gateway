@@ -73,7 +73,7 @@ module PaystackGateway
       end
 
       def handle_error(error)
-        PaystackGateway.logger.error "#{Current.qualified_api_method_name}: #{error.message}"
+        PaystackGateway.logger.error { "#{Current.qualified_api_method_name}: #{error.message}" }
         PaystackGateway.logger.debug { JSON.pretty_generate(filtered_response(error.response) || {}) } if error.response
 
         raise Current.error_class.new(
