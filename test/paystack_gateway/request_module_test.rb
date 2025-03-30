@@ -30,7 +30,7 @@ class RequestModuleTest < Minitest::Test
       PaystackGateway.logger, :info,
       [
         { block_matcher: ->(&blk) { blk.call.match?(/request/) } },
-        { block_matcher: ->(&blk) { blk.call.match?(/response/) }},
+        { block_matcher: ->(&blk) { blk.call.match?(/response/) } },
       ],
     ) do
       VCR.use_cassette 'miscellaneous/country_success' do
